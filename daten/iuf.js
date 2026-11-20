@@ -27,6 +27,14 @@ window.FAECHER.push({
       titel: "Woche 1: Zinsrechnung",
       abschnitt: "Tutorium ab 02.11.2026",
       seiten: "Skript Kap. 1 bis 5.2, S. 1 bis 35",
+      kurz: [
+        "Investition beginnt mit einer Auszahlung (Mittelverwendung), Finanzierung mit einer Einzahlung (Mittelbeschaffung).",
+        "Zahlungen nur vergleichen, wenn sie auf denselben Zeitpunkt gebracht sind: $B_{t^*} = z_t (1+i)^{t^*-t}$.",
+        "$t^* > t$ heißt aufzinsen, $t^* < t$ abzinsen. $t^* = 0$ ergibt den Barwert, $t^* = T$ den Endwert.",
+        "Gespaltener Zins: aufzinsen mit dem Habenzins, abzinsen mit dem Sollzins. Real gilt Sollzins > Habenzins.",
+        "Konformer unterjähriger Zins $r = (1+i)^{1/m} - 1$ rechnet mit Zinseszins. Nicht mit dem Stückzins $i \\cdot d/365$ ohne Zinseszins verwechseln.",
+        "Stetiger Zins: $r = \\ln(1+i)$, $B_t = B_0 e^{rt}$. Clean Price = Dirty Price minus Stückzinsen."
+      ],
       lektionen: [
         {
           "titel": "Zahlungsstrom: Was ist eine Investition, was eine Finanzierung?",
@@ -275,6 +283,14 @@ window.FAECHER.push({
       titel: "Woche 2: Statische und dynamische Investitionsrechnung",
       abschnitt: "Tutorium ab 09.11.2026",
       seiten: "Skript Kap. 5.3 und 6.1.1, S. 36 bis 51",
+      kurz: [
+        "Statische Verfahren betrachten meist eine Periode, der Zeitpunkt der Zahlungen zählt nicht. Dynamische diskontieren über die ganze Laufzeit.",
+        "Kapitalwert $K = \\sum_{t=0}^{T} e_t (1+i)^{-t}$ ist der heutige Vermögenszuwachs. Lohnend, wenn $K > 0$.",
+        "Häufiger Fehler: Barwert (einzelne Zahlung oder nur Rückflüsse) mit Kapitalwert (ganzer Strom inkl. Anfangsauszahlung) verwechseln.",
+        "Dynamische Amortisationsdauer: erster Zeitpunkt, ab dem der Kapitalwert der bisherigen Zahlungen dauerhaft $\\ge 0$ ist.",
+        "Finanzplan: Zinsen $= i \\cdot KB_{t-1}$, Tilgung $= e_t - c_t -$ Zinsen. Am Ende muss KB = 0 sein.",
+        "Rendite (RoI) = Gewinn vor Zinsen / eingesetztes Kapital, also relativ. Der Gewinn ist absolut."
+      ],
       lektionen: [
         {
           "titel": "Worum es geht: Lohnt sich ein Projekt, und welches ist das beste?",
@@ -480,6 +496,14 @@ window.FAECHER.push({
       titel: "Woche 3: Annuitätenrechnung",
       abschnitt: "Tutorium ab 16.11.2026",
       seiten: "Skript Kap. 6.1.2, S. 52 bis 56",
+      kurz: [
+        "Annuität g: maximale konstante Entnahme pro Periode bis T. Ihr Barwert ist genau der Kapitalwert.",
+        "$g = K \\cdot RWF$ mit $RWF = \\frac{i}{1-(1+i)^{-T}}$. Der Rentenbarwertfaktor ist $RBF = 1/RWF$.",
+        "Nachschüssig: erste Zahlung in t = 1. Vorschüssig: erste Zahlung in t = 0, Barwert also mal $(1+i)$.",
+        "Ewige Rente: $K = g/i$. Bei Monatsrenten den konformen Monatszins $r = (1+i)^{1/12}-1$ nehmen.",
+        "Häufiger Fehler: Projekte mit verschiedener Laufzeit per Annuität vergleichen. Dann entscheidet der Kapitalwert.",
+        "Sparrate für einen Endbetrag: $g = B_T \\cdot \\frac{i}{(1+i)^T - 1}$."
+      ],
       lektionen: [
         {
           "titel": "Was ist eine Annuität?",
@@ -666,6 +690,13 @@ window.FAECHER.push({
       titel: "Woche 4: Interner Zinssatz",
       abschnitt: "Vorlesung schon da, Tutorium 4 ab 23.11.2026",
       seiten: "Skript Kap. 6.1.3, S. 56 bis 82",
+      kurz: [
+        "Interner Zins $i^*$: der Zins, bei dem $K = 0$ ist, also die Rendite des Projekts.",
+        "Regel: Das Projekt lohnt, wenn der Kalkulationszins kleiner ist als $i^*$, also $i < i^*$.",
+        "Berechnung: bei T = 2 mit der p-q-Formel, sonst mit Newton $q_{n+1} = q_n - K(q_n)/K'(q_n)$ und $q = 1+i$.",
+        "Normalinvestition (genau ein Vorzeichenwechsel) hat genau einen internen Zins. Sonst sind mehrere oder keine Lösung möglich.",
+        "Häufiger Fehler: höherer $i^*$ heißt nicht höherer K. Über die Differenzinvestition entscheiden: Ist $i^*_{A-B} > i$, lohnt A."
+      ],
       lektionen: [
         {
           "titel": "Die Kapitalwertkurve: Was passiert, wenn der Zins steigt?",
@@ -839,6 +870,12 @@ window.FAECHER.push({
       titel: "Woche 5: Kapitalwertrate",
       abschnitt: "Vorlesung schon da, Tutorium 5 ab 30.11.2026",
       seiten: "Skript Kap. 6.1.4, S. 83 bis 89",
+      kurz: [
+        "Kapitalwertrate $\\text{KWR} = K/A_0$: Kapitalwert pro eingesetztem Euro. Annahme: Auszahlung nur in t = 0.",
+        "Bei begrenztem Budget: Projekte nach KWR absteigend reihen und von oben auffüllen.",
+        "Häufiger Fehler: bei unteilbaren Projekten blind nach KWR wählen. Dann die Kombinationen per Kapitalwert vergleichen.",
+        "Bei einer Periode reihen interner Zins und KWR gleich: $q^* = q_{KWR} \\cdot q$."
+      ],
       lektionen: [
         {
           "titel": "Das Problem: Das Budget ist begrenzt",

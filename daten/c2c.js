@@ -28,6 +28,14 @@ window.FAECHER.push({
       titel: "Organisation und Prüfung",
       abschnitt: "Auftakt 23.10.2026, Syllabus WiSe 2026/27, Vergleich mit 2025/26",
       seiten: "Auftakt-Folien, Syllabus 2026/27, Modulübersicht 2025/26",
+      kurz: [
+        "Portfolioprüfung mit 100 Punkten, bestanden ab 50. Wer durchfällt, wiederholt das ganze Modul.",
+        "Mündliche Rücksprache: 60 Punkte, 30 Minuten, Anfang April 2027 im C2C LAB.",
+        "Gruppenreferat Case Study: 30 Punkte am 17./18.12.2026. Fragenpool: 10 Punkte, Upload bis 15.01.2027.",
+        "Die Fragenpools der Gruppen sind sehr wahrscheinlich die Grundlage der mündlichen Prüfung.",
+        "Kern-Lernziel: C2C erklären und von Ökoeffizienz und klassischer Kreislaufwirtschaft abgrenzen.",
+        "Prüfungsanmeldung über QISPOS/Moses, Frist laut Syllabus 30.11.2026, 23:59 Uhr."
+      ],
       quellen: [
         { name: "Syllabus WiSe 2026/27", pfad: "material/C2C/Kurs-2026-27/C2C_neu_Syllabus_C2C_WiSe_2026_27-1.pdf" },
         { name: "Auftakt und Organisation 2026/27", pfad: "material/C2C/Kurs-2026-27/C2C_neu_Auftakt_C2C_WiSe_2026_27_Organisation.pdf" },
@@ -111,6 +119,14 @@ window.FAECHER.push({
       titel: "Modul 1: Umweltdebatte, Begriffe und Diskurs",
       abschnitt: "Input-Modul 1 (Kurs 2025/26)",
       seiten: "Foliensatz 01 Umweltdebatte und Diskurs (66 Folien)",
+      kurz: [
+        "Katastrophen wie Minamata, Seveso und Tschernobyl lösten die Umweltdebatte aus. 1972 erschien „The Limits to Growth“ (Club of Rome).",
+        "Nachhaltigkeit nach Brundtland (1987): Dreieck aus Ökonomie, Ökologie und Sozialem.",
+        "Drei Strategien: Effizienz (weniger Schaden pro Einheit), Suffizienz (genug haben), Konsistenz (naturverträgliche Kreisläufe, hier steht C2C).",
+        "Abfallhierarchie im KrWG: Vermeidung, Wiederverwendung, Recycling, energetische Verwertung, Beseitigung.",
+        "Recycling-Märchen: Die Quote misst, was in die Anlage hineingeht, nicht was herauskommt. Dazu kommt Downcycling.",
+        "Triple Bottom Line will Schäden auf null senken. Triple Top Line (McDonough/Braungart) setzt positive Ziele."
+      ],
       quellen: [
         { name: "Folien 2025/26: Umweltdebatte und Diskurs", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_01_Umweltdebatte_Diskurs.pdf" }
       ],
@@ -216,6 +232,14 @@ window.FAECHER.push({
       titel: "Modul 2: Cradle to Grave – Industrielle Produktion und Folgeprobleme",
       abschnitt: "Input-Modul 2 (Kurs 2025/26)",
       seiten: "Foliensatz 02 Cradle to Grave (54 Folien, viele nur Bilder und Videos)",
+      kurz: [
+        "Cradle to Grave ist linear: abbauen, herstellen, nutzen, wegwerfen. Das Material ist danach verloren.",
+        "Drei Problembereiche: endliche Rohstoffe, Verschmutzung, Gesundheit. Dazu kommt die soziale Frage.",
+        "Auch Boden ist endlich: 1 cm Humus braucht in Europa 100 bis 300 Jahre.",
+        "Schadstoffe und Plastik kommen über die Nahrungskette zurück. Ein Kreislauf mit giftigen Stoffen ist kein Gewinn.",
+        "Asbest-Lehre: Ersatzstoffe können schlimmer sein. Also Qualität positiv definieren, statt nur einzelne Stoffe zu verbieten.",
+        "Upcycling statt Downcycling geht nur, wenn man weiß, was im Material steckt."
+      ],
       quellen: [
         { name: "Folien 2025/26: Cradle to Grave, Produktion und Folgeprobleme", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_02_Cradle_to_Grave_Produktion_Folgeprobleme.pdf" }
       ],
@@ -306,6 +330,14 @@ window.FAECHER.push({
       titel: "Modul 3: C2C als Denkschule und Designkonzept",
       abschnitt: "Input-Modul 3 (Kurs 2025/26), NGO-Vorstellung 2026/27, philosophische Perspektive (Modul 7)",
       seiten: "Foliensatz 03 Cradle to Cradle, NGO-Folien 2026/27 Folie 2–7, Modul 7 (nur Videolink)",
+      kurz: [
+        "Menschenbild: Der Mensch soll vom Schädling zum Nützling werden, also gut statt nur weniger schlecht sein.",
+        "Ökoeffizienz macht das Falsche besser. Ökoeffektivität fragt, ob man das Richtige tut, und zielt auf einen positiven Fußabdruck.",
+        "Drei Prinzipien: Abfall ist Nahrung, nutze erneuerbare Energie, zelebriere die Vielfalt.",
+        "Biologischer Kreislauf für Verbrauchsprodukte (abbaubar, unschädlich). Technischer Kreislauf für Gebrauchsprodukte, zurück in gleicher Qualität.",
+        "Qualität positiv definieren: gesunde, bekannte Materialien statt „frei von“, denn das sagt nichts über die übrigen Stoffe.",
+        "Geschäftsmodell im technischen Kreislauf: Nutzung statt Eigentum, zum Beispiel Waschen statt Waschmaschine."
+      ],
       quellen: [
         { name: "Folien 2025/26: Cradle to Cradle, Denkschule und Designkonzept", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_03_Cradle_to_Cradle.pdf" },
         { name: "Folien 2026/27: Vorstellung C2C NGO und C2C", pfad: "material/C2C/Kurs-2026-27/C2C_neu_Vorstellung_C2C_NGO_und_C2C_.pdf" },
@@ -421,6 +453,14 @@ window.FAECHER.push({
       titel: "Zertifizierung: Cradle to Cradle Certified",
       abschnitt: "Input-Modul 6 (Folien liegen nicht vor), ergänzt aus C2C-Grundwissen",
       seiten: "Folien 01, Folie 63–64; Folien 05, Folie 10; Case-Study-Checkliste",
+      kurz: [
+        "Zertifiziert werden Produkte, nicht Unternehmen. Vergabe durch das C2C Products Innovation Institute (gegründet 2010).",
+        "Fünf Kategorien: Materialgesundheit, Kreislauffähigkeit, saubere Luft und Klimaschutz, Wasser und Boden, soziale Gerechtigkeit.",
+        "Stufen Bronze, Silver, Gold, Platinum. Die schwächste Kategorie bestimmt das Gesamtniveau.",
+        "Ablauf: Inhaltsstoffe offenlegen, unabhängiger Gutachter bewertet, Institut vergibt. Regelmäßig erneuern, Verbesserung ist eingeplant.",
+        "Kritik: „nicht noch ein Öko-Label“. Das Zertifikat ist ein Werkzeug, nicht das Ziel.",
+        "Achtung: Folien zu Modul 6 fehlen. Details vor der Prüfung auf c2ccertified.org nachprüfen."
+      ],
       quellen: [
         { name: "Folien 2025/26: Umweltdebatte (Folie 63–64 zu C2C PII und Zertifizierung)", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_01_Umweltdebatte_Diskurs.pdf" },
         { name: "Modulübersicht 2025/26 (Aspekt „Zertifiziert? Wenn ja: Wie?“)", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_0_Modulübersicht.pdf" }
@@ -500,6 +540,14 @@ window.FAECHER.push({
       titel: "Modul 5: Einordnung in die Wirtschaftswissenschaft",
       abschnitt: "Input-Modul 5 (Kurs 2025/26), Bezug zu Modul 9 (Wachsen oder verzichten)",
       seiten: "Foliensatz 05 Einordnung Wirtschaftswissenschaften (21 Folien, nach Janßen 2013)",
+      kurz: [
+        "Kernfrage nach Janßen (2013): Wie bringt man C2C als Innovation in den Markt?",
+        "Betriebswirtschaftlich: Unternehmen als Rohstoffbank. Rückgewinnung bringt Rentabilität, Planungssicherheit und Kundenbindung.",
+        "Volkswirtschaftlich: Wenn Rohstoffe zirkulieren, verliert das knappe Gut an Bedeutung, die Verteilung rückt in den Mittelpunkt.",
+        "Gesellschaftliche Widerstände: Konsumparadigma, Kritik der Postwachstumsökonomie, Labelflut, ungewohnte Rückgewinnungssysteme.",
+        "Im Unternehmen bremsen Cash Cows, hohe Entwicklungskosten und billige Rohstoffe. Wandel braucht das Top-Management.",
+        "C2C ist Basis- und Radikalinnovation, aus konventioneller Sicht aber nur Verbesserung, weil der Alltagsnutzen gleich bleibt."
+      ],
       quellen: [
         { name: "Folien 2025/26: Einordnung in die Wirtschaftswissenschaften", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2026_5_Einordnung_Wirtschaftswissenschaften.pdf" }
       ],
@@ -594,6 +642,14 @@ window.FAECHER.push({
       titel: "Modul 8: Circular Economy – Umfeldbetrachtung",
       abschnitt: "Input-Modul 8 (Kurs 2025/26)",
       seiten: "Foliensatz 08 C2C und Circular Economy (64 Folien, fast nur Abbildungen aus Studien)",
+      kurz: [
+        "Circular Economy ist ein breites Wirtschaftskonzept zur Werterhaltung, vorangetrieben von Stiftungen, Beratungen, NGOs und Politik.",
+        "Ellen MacArthur Foundation: Studienreihe ab 2012. Ihr Butterfly Diagram zeigt wie C2C zwei Kreisläufe.",
+        "EMF 2014: Die Definition der Materialrezepturen ist der Schlüssel zum Wandel.",
+        "Accenture nennt fünf zirkuläre Geschäftsmodelle, darunter Product Life Extension, Sharing Platforms und Product as a Service.",
+        "Abgrenzung: Abfallwirtschaft verwaltet Müll, Kreislaufwirtschaft ist ein Rechtsbegriff mit Quoten, Zero Waste vermeidet Abfall.",
+        "C2C ist ein Designkonzept: Es definiert zusätzlich Qualität und Gesundheit der Materialien und strebt einen positiven Fußabdruck an."
+      ],
       quellen: [
         { name: "Folien 2025/26: C2C und Circular Economy, Umfeldbetrachtung", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2026_8_C2C_CE_Umfeldbetrachtung.pdf" },
         { name: "Folien 2025/26: Cradle to Cradle (Folie 33–34 „Cradle to what?“)", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_03_Cradle_to_Cradle.pdf" }
@@ -682,6 +738,14 @@ window.FAECHER.push({
       titel: "Modul 10: Product-Service-Systeme (PSS)",
       abschnitt: "Input-Modul 10 (Kurs 2025/26)",
       seiten: "Foliensatz 10 Product-Service-Systems (12 Folien, nach Tukker 2004)",
+      kurz: [
+        "Ein PSS verbindet Produkt und Dienstleistung: Der Kunde kauft einen Nutzen, nicht nur ein Ding.",
+        "Acht Typen nach Tukker (2004) in drei Gruppen: produktorientiert, nutzungsorientiert, ergebnisorientiert.",
+        "Nutzungsorientiert: Der Anbieter bleibt Eigentümer, zum Beispiel bei Leasing, Sharing oder Pooling.",
+        "Ergebnisorientiert: Der Kunde zahlt für ein Ergebnis, etwa Pay-per-Print oder „angenehmes Raumklima“ statt Kühlgerät.",
+        "Je ergebnisorientierter, desto mehr Interesse hat der Anbieter an Langlebigkeit und Rückgewinnung. Das passt zur Rohstoffbank.",
+        "Kritik: Liegt Eigentum nur beim Unternehmen, droht Monopolbildung. Welche politischen Rahmenbedingungen braucht es?"
+      ],
       quellen: [
         { name: "Folien 2025/26: Product-Service-Systems", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2026_10_Product_Service_Systems.pdf" }
       ],
@@ -769,6 +833,14 @@ window.FAECHER.push({
       titel: "Praxis: Labor Tempelhof, C2C LAB und C2C NGO",
       abschnitt: "Laborprojekte (Kurs 2025/26), NGO-Vorstellung 2026/27",
       seiten: "Foliensatz Labor Tempelhof (40 Folien), NGO-Folien 2026/27 Folie 8–29",
+      kurz: [
+        "C2C NGO: gemeinnütziger Verein, 2012 gegründet, Sitz Berlin. Aufgaben: Bildung, Vernetzung, Beschleunigung.",
+        "C2C LAB: laut NGO weltweit erste umfassende Bestandssanierung nach C2C-Kriterien, ein Plattenbau. Ort der mündlichen Prüfung.",
+        "Labor Tempelhof 2022: Konzerte von Die Ärzte und Die Toten Hosen als Testfeld für C2C bei Großveranstaltungen.",
+        "Biologischer Kreislauf in der Praxis: Trenntoiletten, Feststoffe wurden zu Humus, Phosphor wurde aus Urin zurückgewonnen.",
+        "Bilanz 2022: 100 Prozent Ökostrom, 51 Prozent weniger Wasser, rund 85 Prozent kamen mit ÖPNV, Rad oder zu Fuß.",
+        "C2C-T-Shirts: 100 Prozent kompostierbar, gesundes Material, ganze Wertschöpfung im Rohstoffland."
+      ],
       quellen: [
         { name: "Folien 2025/26: Labor Tempelhof", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2026_Labor_Tempelhof.pdf" },
         { name: "Folien 2026/27: Vorstellung C2C NGO und C2C", pfad: "material/C2C/Kurs-2026-27/C2C_neu_Vorstellung_C2C_NGO_und_C2C_.pdf" }
@@ -858,6 +930,14 @@ window.FAECHER.push({
       titel: "Case Study analysieren und Querschnittsfragen",
       abschnitt: "Checkliste aus der Modulübersicht 2025/26, Lernziele Syllabus 2026/27",
       seiten: "Modulübersicht Folie 9–10, alle Module",
+      kurz: [
+        "Neun Aspekte prüfen: Kreislauf, Geschäftsmodell, Zertifizierung, Wasser, Soziales, Energie, Kreislauffähigkeit, Materialgesundheit, Roadmap.",
+        "Gute Reihenfolge: ein Satz zum Fall, dann Kreislauf und Materialgesundheit, das Herz von C2C.",
+        "Verbrauch oder Abrieb heißt biologischer Kreislauf, reine Nutzung technischer. Mischprodukte müssen trennbar sein.",
+        "Kreislauffähigkeit: Kommt das Material tatsächlich zurück, und zwar in gleicher Qualität statt Downcycling?",
+        "Geschäftsmodell: Wer ist Eigentümer, und wer hat den Anreiz zur Rückgewinnung?",
+        "Zum Schluss Zertifizierungsstufe und Roadmap: Wo steht das Projekt, was ist der nächste Schritt?"
+      ],
       quellen: [
         { name: "Modulübersicht 2025/26 (Aspekte der Case Study)", pfad: "material/C2C/Kurs-2025-26/C2C_alt_2025_0_Modulübersicht.pdf" },
         { name: "Syllabus WiSe 2026/27 (Lernziele)", pfad: "material/C2C/Kurs-2026-27/C2C_neu_Syllabus_C2C_WiSe_2026_27-1.pdf" }

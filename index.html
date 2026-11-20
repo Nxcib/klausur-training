@@ -87,6 +87,16 @@ input.num{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radi
 .quellen a,.quellen span{font-size:13px;border:1px solid var(--line);border-radius:6px;padding:3px 9px;color:var(--accent);text-decoration:none;background:var(--panel)}
 .quellen span{color:var(--muted)}
 details.aufgabe{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;background:var(--panel)}
+/* Lernblatt: kurz oben, Rest aufklappbar */
+.kurz{background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin:14px 0}
+.kurz h3{margin:0 0 6px}
+.kurz li{margin:6px 0}
+details.abschnitt{border-top:1px solid var(--line);margin-top:12px;padding-top:8px}
+details.abschnitt>summary{cursor:pointer;font-weight:600;font-size:15px;padding:4px 0}
+details.abschnitt>summary .muted{font-weight:400}
+details.lektion{border-left:3px solid var(--accent);padding:2px 0 2px 14px;margin:10px 0}
+details.lektion>summary{cursor:pointer;font-weight:600}
+details.lektion>summary .ok{color:var(--good);font-weight:400}
 details.aufgabe summary{cursor:pointer;font-weight:600}
 details.aufgabe .txt{margin:8px 0}
 details.aufgabe ol{margin:8px 0 0;padding-left:20px}
@@ -248,7 +258,7 @@ textarea.aus.f{background:var(--bad-soft);border-color:var(--bad)}
   const FAECHER = window.FAECHER || [];
   // Fehlende Listen auffüllen, damit jedes Fach nur die Teile braucht, die es hat
   for (const f of FAECHER) for (const k of f.kapitel)
-    for (const feld of ["karten","quiz","formeln","aufgaben","zusammenfassung","lektionen","pruefungsfragen","quellen"]) k[feld] = k[feld] || [];
+    for (const feld of ["karten","quiz","formeln","aufgaben","zusammenfassung","lektionen","pruefungsfragen","quellen","kurz"]) k[feld] = k[feld] || [];
   // Training-Übungen kommen aus einer eigenen Datei (z. B. daten/prog1_training.js) und werden hier an die Kapitel gehängt
   for (const f of FAECHER) {
     const t = (window.TRAINING || {})[f.id] || {};
@@ -548,24 +558,27 @@ textarea.aus.f{background:var(--bad-soft);border-color:var(--bad)}
       ${k.quellen.length ? `<div class="quellen">${k.quellen.map(s => s.pfad && !window.OHNE_PDF
           ? `<a href="${pfadUrl(s.pfad)}" target="_blank" rel="noopener">${esc(s.name)}</a>`
           : `<span>${esc(s.name)}</span>`).join("")}</div>` : ""}
+      ${k.kurz.length ? `<div class="kurz"><h3>Das Wichtigste in Kürze</h3><ul>${k.kurz.map(z => `<li>${esc(z)}</li>`).join("")}</ul></div>` : ""}
       ${k.training.length ? lernweg(k, lstand) : ""}
-      ${k.lektionen.length ? `<h3>Schritt für Schritt</h3>` + k.lektionen.map((l, i) => `<div class="lektion">
-          <h4>${i + 1}. ${esc(l.titel)}</h4>
+      ${k.lektionen.length ? `<details class="abschnitt"><summary>Schritt für Schritt erklärt <span class="muted small">(${k.lektionen.length} Lektionen, ${k.lektionen.filter((l, i) => lstand[k.id + ":" + i]).length} erledigt)</span></summary>` + k.lektionen.map((l, i) => `<details class="lektion">
+          <summary>${i + 1}. ${esc(l.titel)} ${lstand[k.id + ":" + i] ? `<span class="ok">✓</span>` : ""}</summary>
           ${[].concat(l.text || []).map(p => `<p>${esc(p)}</p>`).join("")}
           ${l.code ? `<div class="lbl">Beispiel</div>${codeBlock(l.code)}` : ""}
           ${l.ausgabe ? `<div class="lbl">Ausgabe</div>${codeBlock(l.ausgabe, "out")}` : ""}
           ${l.merke ? `<div class="merke"><b>Merke:</b> ${esc(l.merke)}</div>` : ""}
           <button class="btn erledigt ${lstand[k.id + ":" + i] ? "ist" : ""}" data-lek="${k.id}:${i}" aria-pressed="${!!lstand[k.id + ":" + i]}">${lstand[k.id + ":" + i] ? "✓ Erledigt" : "Als erledigt markieren"}</button>
-        </div>`).join("") : ""}
-      ${k.zusammenfassung.length ? `<h3>Das Wichtigste</h3><ul>${k.zusammenfassung.map(z => `<li>${esc(z)}</li>`).join("")}</ul>` : ""}
-      ${k.aufgaben.length ? `<h3>${esc(fach().aufgabenTitel || "Aufgaben aus Tutorium, FHA und Altklausuren")}</h3>` +
+        </details>`).join("") + `</details>` : ""}
+      ${k.zusammenfassung.length ? (k.kurz.length
+        ? `<details class="abschnitt"><summary>Ausführliche Zusammenfassung <span class="muted small">(${k.zusammenfassung.length} Punkte)</span></summary><ul>${k.zusammenfassung.map(z => `<li>${esc(z)}</li>`).join("")}</ul></details>`
+        : `<h3>Das Wichtigste</h3><ul>${k.zusammenfassung.map(z => `<li>${esc(z)}</li>`).join("")}</ul>`) : ""}
+      ${k.aufgaben.length ? `<details class="abschnitt"><summary>${esc(fach().aufgabenTitel || "Aufgaben aus Tutorium, FHA und Altklausuren")} <span class="muted small">(${k.aufgaben.length})</span></summary>` +
         k.aufgaben.map(a => `<details class="aufgabe">
           <summary>${esc(a.titel)}</summary>
           <div class="src">${esc(a.q || "")}</div>
           <div class="txt">${esc(a.text)}</div>
           ${codeBlock(a.code)}
           <details><summary class="btn loesbtn">Lösung zeigen</summary><ol>${(a.loesung || []).map(l => `<li>${esc(l)}</li>`).join("")}</ol>${codeBlock(a.loesungCode)}</details>
-        </details>`).join("") : ""}
+        </details>`).join("") + `</details>` : ""}
       <div class="row" style="margin-top:16px">
         ${k.karten.length ? `<button class="btn" data-go="karten">Karteikarten (${k.karten.length})</button>` : ""}
         ${k.quiz.length ? `<button class="btn" data-go="quiz">Quiz (${k.quiz.length})</button>` : ""}
@@ -939,6 +952,8 @@ textarea.aus.f{background:var(--bad-soft);border-color:var(--bad)}
     if (lek) {
       const an = lektionUmschalten(lek.dataset.lek); // ohne Neuaufbau, damit die Scrollposition bleibt
       lek.classList.toggle("ist", an); lek.setAttribute("aria-pressed", an); lek.textContent = an ? "✓ Erledigt" : "Als erledigt markieren";
+      const sum = lek.closest("details.lektion")?.querySelector(":scope > summary");
+      if (sum) { sum.querySelector(".ok")?.remove(); if (an) sum.insertAdjacentHTML("beforeend", ` <span class="ok">✓</span>`); }
       return;
     }
     const tb = e.target.closest("[data-tback]"); if (tb) { tAuf = null; render(); return; }

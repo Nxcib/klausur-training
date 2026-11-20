@@ -1,13 +1,14 @@
 // Technische Grundlagen der Informatik (TGI/TechGI, Orr Dunkelman, FG SecT, TU Berlin), WiSe 2026/27
-// Gegliedert nach Kapiteln: 0 Einführung, 1 Boolesche Logik, 2 Boolesche Arithmetik, 3 Speicher, 4 Maschinensprache (Hack).
+// Gegliedert nach Kapiteln: 0 Einführung, 1 Boolesche Logik, 2 Boolesche Arithmetik, 3 Speicher, 4 Maschinensprache (Hack), 5 Computer-Architektur (Hack-CPU, ergänzt 20.11.2026, Prüfskript werkzeuge/tgi_k5.py).
 // Stand: 18.11.2026. Erzeugt aus scratchpad/tgicheck/k0.py ... k4.py (build.py).
 // Alle Wahrheitstabellen, Vereinfachungen, Umrechnungen, ALU-Rechnungen, Flip-Flop-Verläufe und Hack-Programme
 // wurden mit Python geprüft (itertools-Wahrheitstabellen, Bitmasken, eigener Hack-Assembler/Simulator).
 // Klausur: schriftlich, Deutsch, 90 Min., keine Hilfsmittel. Zulassung: 80 % aller ISIS-Quiz-Punkte.
-// Die ISIS-Quizze sind bewusst NICHT nachgebildet. Zu Blatt 03 steht nur die Aufgabenstellung (Lösung folgt nach ISIS).
+// Die ISIS-Quizze sind bewusst NICHT nachgebildet. Zu Blatt 03 und 04 steht nur die Aufgabenstellung (Lösung folgt nach ISIS).
 
 window.FAECHER = window.FAECHER || [];
-window.FAECHER.push({
+window.FAECHER.push(
+{
  "id": "tgi",
  "name": "Technische Grundlagen der Informatik",
  "kurz": "TGI",
@@ -15,14 +16,14 @@ window.FAECHER.push({
   "datum": "2027-02-26T15:00:00",
   "text": "Fr 26.02.2027, 15:00, HE 101 (90 Min., auf Deutsch, keine Hilfsmittel). 2. Termin Fr 09.04.2027"
  },
- "quelle": "Folien Intro und Lecture 1–4 (Nand to Tetris, Nisan/Schocken), Buchkapitel 1–3 und Computer Architecture, Aufgabenblätter 1–3 mit Lösungsvorschlägen zu Blatt 1 und 2 (ISIS, Stand 18.11.2026)",
+ "quelle": "Folien Intro und Lecture 1–5 (Nand to Tetris, Nisan/Schocken), Buchkapitel 1–3 und Computer Architecture, Aufgabenblätter 1–4 mit Lösungsvorschlägen zu Blatt 1 und 2 (ISIS, Stand 20.11.2026)",
  "aufgabenTitel": "Aufgaben aus den Übungsblättern",
  "anleitung": [
   "Fang bei Kapitel 0 an und geh die Kapitel der Reihe nach durch. Jedes Kapitel benutzt die Bausteine des vorigen: ohne Gatter keine ALU, ohne ALU und Speicher keine Maschinensprache.",
   "Lies jede Lektion ganz und rechne das Beispiel im Kasten selbst auf Papier nach, bevor du weiterliest. Neue Begriffe werden beim ersten Auftreten erklärt. Wenn du einen vergessen hast, geh eine Lektion zurück.",
   "In der Klausur ist kein Taschenrechner erlaubt. Übe deshalb Umrechnungen (Binär, Dezimal, Hex, Zweierkomplement) und Zweierpotenzen bis 2^16 von Hand, bis sie sitzen. Bei Wahrheitstabellen und Hack-Programmen hilft immer eine saubere Tabelle Zeile für Zeile.",
   "Dann die Karteikarten: Antwort erst laut sagen, dann aufdecken. Die englischen Begriffe in Klammern brauchst du, um die Folien zu lesen. In der Klausur schreibst du Deutsch.",
-  "Danach die Aufgaben aus den Übungsblättern: erst selbst lösen, dann die Lösung Schritt für Schritt vergleichen. Zu Blatt 03 gibt es noch keinen offiziellen Lösungsvorschlag. Dort steht stattdessen eine eigene Übung mit Lösung.",
+  "Danach die Aufgaben aus den Übungsblättern: erst selbst lösen, dann die Lösung Schritt für Schritt vergleichen. Zu Blatt 03 und 04 gibt es noch keinen offiziellen Lösungsvorschlag. Dort steht stattdessen eine eigene Übung mit Lösung.",
   "Zum Schluss das Quiz des Kapitels, mit dem Ziel 80 Prozent. Es ersetzt nicht die ISIS-Quizze für die Zulassung, die machst du dort selbst. Falsche Fragen nach einem Tag wiederholen, den Spickzettel vor der Klausur aus dem Kopf aufschreiben."
  ],
  "kapitel": [
@@ -31,6 +32,14 @@ window.FAECHER.push({
    "titel": "Kapitel 0: Einführung",
    "abschnitt": "Erste Vorlesung (Organisation und Intro), kein Übungsblatt",
    "seiten": "TechGI_01_intro (Organisation, Themen, Literatur), Intro.pdf (Nand to Tetris, Folien 1–25), Lecture 1 S. 5–11 (Bits)",
+   "kurz": [
+     "Ein Bit hat zwei Zustände (0/1). N Bits ergeben $2^N$ Zustände.",
+     "Für n verschiedene Werte braucht man $N = \\lceil \\log_2 n \\rceil$ Bits.",
+     "1 Byte = 8 Bit = 256 Zustände. Hack arbeitet mit 16-Bit-Wörtern (65536 Zustände).",
+     "Abstraktion = was ein Modul tut. Implementierung = wie es das tut.",
+     "Zweierpotenzen auswendig, kein Taschenrechner: $2^{10} = 1024$, $2^{14} = 16384$, $2^{15} = 32768$, $2^{16} = 65536$.",
+     "Zulassung: 80 % aller Quizpunkte. Klausur 90 Minuten ohne Hilfsmittel."
+   ],
    "quellen": [
     {
      "name": "Organisation und Themen (TechGI_01_intro)",
@@ -405,6 +414,14 @@ window.FAECHER.push({
    "titel": "Kapitel 1: Boolesche Logik",
    "abschnitt": "Vorlesung Kapitel 1 (Boolean Logic), Blatt 01 (Tutorien ab 03.11.2026)",
    "seiten": "Lecture 1 (Boolean Logic), Buch Kapitel 1 (Nisan/Schocken), Aufgabenblatt 1 mit Lösungsvorschlag",
+   "kurz": [
+     "Wahrheitstabelle mit n Eingängen hat $2^n$ Zeilen. Es gibt $2^{2^n}$ Funktionen, bei n = 2 also 16.",
+     "AND: nur 1,1 ergibt 1. OR: mindestens eine 1. NAND: nur 1,1 ergibt 0. XOR: verschieden ergibt 1.",
+     "De Morgan: $\\neg(a \\land b) = \\neg a \\lor \\neg b$. Not wandert in die Klammer, And und Or tauschen.",
+     "DNF: pro 1-Zeile ein And-Term aller Variablen, die Terme mit Or verbinden.",
+     "NAND ist universal: Not(x) = x Nand x. Daraus lässt sich jeder Computer bauen.",
+     "Mux: sel = 0 wählt a, sel = 1 wählt b. m Eingänge brauchen $\\log_2 m$ Auswahlbits."
+   ],
    "quellen": [
     {
      "name": "Lecture 1: Boolean Logic (Folien)",
@@ -1003,6 +1020,14 @@ window.FAECHER.push({
    "titel": "Kapitel 2: Boolesche Arithmetik",
    "abschnitt": "Vorlesung Kapitel 2 (Boolean Arithmetic), Blatt 02 (Tutorien ab 10.11.2026)",
    "seiten": "Lecture 2 (Boolean Arithmetic), Buch Kapitel 2, Aufgabenblatt 2 mit Lösungsvorschlag",
+   "kurz": [
+     "Binär nach dezimal: Stellenwerte der Einsen addieren. Dezimal nach binär: durch 2 teilen, Reste rückwärts lesen.",
+     "Hex: eine Hexziffer = 4 Bit, A bis F = 10 bis 15.",
+     "Zweierkomplement: $-x$ = invertieren + 1. Das MSB hat den Wert $-2^{n-1}$.",
+     "Wertebereich mit n Bit: unsigned $[0, 2^n - 1]$, Zweierkomplement $[-2^{n-1}, 2^{n-1} - 1]$.",
+     "Halbaddierer: sum = a XOR b, carry = a AND b. Volladdierer aus 2 HA und OR, carry = Mehrheit.",
+     "Überlauf: gleiche Vorzeichen rein, anderes Vorzeichen raus. Ein Übertrag über das linke Bit wird ignoriert."
+   ],
    "quellen": [
     {
      "name": "Lecture 2: Boolean Arithmetic (Folien)",
@@ -1589,6 +1614,14 @@ window.FAECHER.push({
    "titel": "Kapitel 3: Speicher",
    "abschnitt": "Vorlesung Kapitel 3 (Memory), Blatt 03 (D-Flip-Flops, Tutorien ab 16.11.2026)",
    "seiten": "Lecture 3 (Memory), Buch Kapitel 3 (memory.pdf), Aufgabenblatt 3 (ohne Lösung)",
+   "kurz": [
+     "Kombinatorisch: Ausgang hängt nur von den aktuellen Eingängen ab. Sequentiell: auch von früheren (Register, RAM).",
+     "DFF: $out(t+1) = in(t)$. Grundbaustein jeder Speicherschaltung.",
+     "Bit-Register: Bei load = 1 wird in im nächsten Takt übernommen, sonst wird der Wert gehalten.",
+     "RAM mit n Registern braucht $k = \\log_2 n$ Adressbits, z. B. RAM8 3 Bit, RAM16K 14 Bit.",
+     "PC-Rangfolge: reset > load > inc > halten. Er enthält die Adresse des nächsten Befehls.",
+     "Häufiger Fehler im Schaltwerk: Flip-Flops nacheinander schalten. Alle schalten gleichzeitig mit den alten Werten."
+   ],
    "quellen": [
     {
      "name": "Lecture 3: Memory (Folien)",
@@ -2082,6 +2115,14 @@ window.FAECHER.push({
    "titel": "Kapitel 4: Maschinensprache (Hack)",
    "abschnitt": "Vorlesung Kapitel 4 (Machine Language), aktuelle Woche, noch kein Übungsblatt mit Lösung",
    "seiten": "Lecture 4 (Machine Language), Intro (Binärcode-Beispiel), Buchkapitel computer_architecture.pdf (Abschnitt 5.2: CPU, Speicherkarte, Bildschirm, Tastatur)",
+   "kurz": [
+     "Hack: Register A und D, M = RAM[A]. ROM enthält die Befehle, RAM die Daten.",
+     "A-Befehl @xxx setzt A = xxx und wählt damit RAM[xxx] als M und ROM[xxx] als Sprungziel.",
+     "C-Befehl: dest = comp ; jump. Als Konstanten in comp gehen nur 0, 1 und −1.",
+     "Speicherzugriff immer als Paar: erst @adresse, dann Befehl mit M. Werte, die du noch brauchst, vorher in D sichern.",
+     "Sprung: @ZIEL, dann comp;JXX. Die Bedingung vergleicht comp mit 0, JMP springt immer.",
+     "Symbole: SCREEN = 16384, KBD = 24576, neue Variablen ab 16. Programmende mit (END) @END 0;JMP."
+   ],
    "quellen": [
     {
      "name": "Lecture 4: Machine Language (Folien)",
@@ -2668,6 +2709,620 @@ window.FAECHER.push({
      ]
     }
    ]
+  },
+  {
+   "id": "k5",
+   "titel": "Kapitel 5: Computer-Architektur (die Hack-CPU)",
+   "abschnitt": "Vorlesung Kapitel 5 (Computer Architecture), Aufgabenblatt 4 noch ohne Lösungsvorschlag",
+   "seiten": "Lecture 5 (Computer Architecture), Buchkapitel computer_architecture.pdf (Kapitel 5), Aufgabenblatt 4",
+   "kurz": [
+     "Fetch-Execute-Zyklus: Befehl an Adresse PC holen, ausführen, dann PC + 1 oder Sprungziel.",
+     "A-Befehl (MSB 0): A übernimmt den Befehlswert.",
+     "C-Befehl 111a cccccc ddd jjj: a wählt A oder M, c steuert die ALU, d sind die load-Bits, j steuern den Sprung.",
+     "Sprung, wenn (j1 und ng) oder (j2 und zr) oder (j3 und nicht zr und nicht ng).",
+     "PC: reset → 0, Sprung → A, sonst + 1. Das Sprungziel muss vorher in A stehen.",
+     "Speicherkarte: RAM 0 bis 16383, Screen 16384 bis 24575, Keyboard 24576."
+   ],
+   "quellen": [
+    {
+     "name": "Lecture 5: Computer Architecture (Folien)",
+     "pfad": "material/TGI/05 Computer Architecture/Lecture5.pdf"
+    },
+    {
+     "name": "Buchkapitel 5: Computer Architecture",
+     "pfad": "material/TGI/04 Machine Language/computer_architecture.pdf"
+    },
+    {
+     "name": "Aufgabenblatt 4: Hack CPU (Aufgaben)",
+     "pfad": "material/TGI/05 Computer Architecture/TechGI-Übungsblatt-04-Aufgaben.pdf"
+    }
+   ],
+   "lektionen": [
+    {
+     "titel": "Wo wir stehen: aus Bausteinen wird ein Computer",
+     "text": [
+      "In den Kapiteln 1 bis 3 hast du Bausteine gebaut: Gatter, die ALU (Rechenwerk), Register und RAM (Speicher), dazu den Programmzähler PC. In Kapitel 4 hast du die Maschinensprache Hack kennengelernt, also die Befehle, die ein Computer verstehen soll. Jetzt fehlt das Stück dazwischen: eine Schaltung, die diese Befehle wirklich ausführt (Lecture 5, S. 4–5).",
+      "Alltagsbild: Du hast Motor, Räder, Lenkrad und Tank einzeln gebaut und kennst die Verkehrsregeln. Jetzt baust du das Auto zusammen, damit es nach den Regeln fährt.",
+      "Die Folien zeigen kurz die Geschichte (S. 8–14): Pascal und Leibniz bauten im 17. Jahrhundert mechanische Rechenmaschinen, die nur rechnen konnten. Jacquards Webstuhl (1804) und Babbage (1837) nutzten Lochkarten: Damit wurde eine Maschine programmierbar. ENIAC (1946) und Colossus (1945) waren frühe digitale, programmierbare Rechner.",
+      "Der Kern aller modernen Computer (S. 14): Dieselbe Hardware kann viele verschiedene Programme ausführen. Ob ein Rechner Differentialgleichungen löst oder Rechnungen schreibt, liegt nur am Programm, nicht an der Schaltung.",
+      "Ein Computer im Sinn dieser Vorlesung ist eine Maschine, die mit Befehlen (instructions) Daten bearbeitet (S. 15)."
+     ],
+     "merke": "Kapitel 5 baut aus ALU, Registern, RAM und PC eine CPU und daraus einen ganzen Computer, der Hack-Programme ausführt."
+    },
+    {
+     "titel": "Die Grundarchitektur: CPU, Speicher und Busse",
+     "text": [
+      "Die Grundarchitektur (basic architecture, S. 15–18) hat zwei große Teile. Der Speicher (memory) enthält das Programm und die Daten. Die CPU (central processing unit, der Prozessor) enthält die ALU, ein paar Register und den Programmzähler.",
+      "Ein Register ist ein kleiner Speicherplatz für genau eine Zahl, hier 16 Bit. Die CPU hat Datenregister (für Zwischenergebnisse) und ein Adressregister (merkt sich, welche Speicherzelle gemeint ist).",
+      "Die Teile sind über Busse verbunden. Ein Bus ist ein Bündel von Leitungen, auf dem eine Zahl von einem Chip zum anderen fließt. Alltagsbild: eine mehrspurige Straße zwischen zwei Gebäuden, auf der jede Spur ein Bit trägt.",
+      "Es gibt drei Arten (S. 16–18): Der Datenbus (data bus) trägt Werte, zum Beispiel 42 vom Speicher zur ALU. Der Adressbus (address bus) trägt Adressen, also die Nummer der Speicherzelle, die gelesen oder beschrieben werden soll. Der Steuerbus (control bus) trägt Steuersignale, also die Information, was die Chips tun sollen (zum Beispiel: jetzt schreiben).",
+      "Der ganze Computer ist damit eine Menge von Chips, die über Busse verbunden sind (S. 18)."
+     ],
+     "code": "            Adressbus  (welche Zelle?)\n   CPU  ───────────────────────►  Speicher\n  (ALU,  ◄──────────────────────►  (Programm\n  Register, Datenbus (welcher Wert?)   und Daten)\n   PC)   ───────────────────────►\n            Steuerbus  (was tun?)",
+     "merke": "Datenbus = Werte, Adressbus = Adressen, Steuerbus = Steuersignale. Ein Computer ist Chips plus Busse."
+    },
+    {
+     "titel": "Der Grundtakt jedes Computers: Holen und Ausführen",
+     "text": [
+      "Jeder Computer arbeitet in einer Schleife, dem Fetch-Execute-Zyklus (fetch = holen, execute = ausführen, S. 20–24):",
+      "1. Holen (fetch): Der Programmzähler PC (program counter) gibt die Adresse des nächsten Befehls aus. Diese Adresse geht über den Adressbus an den Speicher, und der Speicher liefert den Befehl zurück.",
+      "2. Ausführen (execute): Die Bits des Befehls sagen der CPU, welche ALU-Operation sie machen soll, mit welchen Werten (CPU-Register oder Speicherzellen) und wohin das Ergebnis kommt (S. 24).",
+      "3. Nebenbei wird festgelegt, welcher Befehl als Nächstes kommt: normalerweise der folgende (PC + 1), bei einem Sprung ein anderer.",
+      "Alltagsbild: Du kochst nach Rezept. Der Finger auf der aktuellen Zeile ist der PC. Du liest die Zeile (holen), machst, was dort steht (ausführen), und rückst den Finger eine Zeile weiter, außer dort steht „zurück zu Schritt 3“ (Sprung).",
+      "Beispiel: PC = 5. Holen: Speicher liefert den Befehl an Adresse 5, etwa D=D+1. Ausführen: D wird um 1 größer. Kein Sprung, also PC = 6, und alles beginnt von vorn."
+     ],
+     "merke": "Fetch: Befehl an Adresse PC holen. Execute: Befehl ausführen. Danach PC = PC + 1 oder Sprungziel."
+    },
+    {
+     "titel": "Ein Speicher oder zwei? Von Neumann gegen Harvard",
+     "text": [
+      "Problem (S. 25): Liegen Programm und Daten im selben Speicher, braucht der Speicher zwei Adressen gleichzeitig, eine für den Befehl und eine für die Daten, mit denen der Befehl arbeitet. Und die CPU muss wissen, ob das, was aus dem Speicher kommt, ein Befehl oder ein Datenwert ist.",
+      "Lösung 1: Zwei Takte, ein Speicher (two-cycle, one-memory machine, S. 26–28). Im ersten Takt (Fetch-Zyklus) wird der Befehl geholt und in ein Befehlsregister (instruction register) gelegt. Im zweiten Takt (Execute-Zyklus) wird ein Datenwert aus dem Speicher geholt und der Befehl ausgeführt. Ein Fetch/Execute-Bit steuert einen Mux vor dem Adresseingang (wählt PC oder Datenadresse) und einen DMux hinter dem Speicherausgang (schickt den Wert ins Befehlsregister oder zur ALU).",
+      "Zur Erinnerung: Ein Mux (Multiplexer) wählt mit einem Steuerbit einen von zwei Eingängen aus, wie eine Weiche. Ein DMux schickt einen Eingang auf einen von zwei Ausgängen.",
+      "Lösung 2: Ein Takt, zwei Speicher (single-cycle, two-memory machine, S. 29). Befehle und Daten liegen in zwei getrennten Speichern, die gleichzeitig im selben Takt gelesen werden. Aus historischen Gründen heißt das Harvard-Architektur.",
+      "Vorteile von Lösung 2 (S. 30): einfache Architektur, schnelle Verarbeitung (ein Befehl pro Takt). Nachteile: man braucht zwei Speicherchips, und die Adressräume sind getrennt (Adresse 5 im Befehlsspeicher ist etwas anderes als Adresse 5 im Datenspeicher).",
+      "Hack benutzt Lösung 2: ROM für das Programm, RAM für die Daten. Deshalb kannst du in Hack in einem Befehl gleichzeitig den nächsten Befehl holen und RAM[A] lesen."
+     ],
+     "merke": "Ein Speicher: zwei Takte und ein Befehlsregister. Zwei Speicher (Harvard, so bei Hack): ein Takt, schneller und einfacher, aber zwei Chips und getrennte Adressräume."
+    },
+    {
+     "titel": "Die Hack-CPU von außen: Eingänge und Ausgänge",
+     "text": [
+      "Bevor wir hineinschauen, behandeln wir die CPU als Kasten (Abstraktion, S. 33–35). Sie hat drei Eingänge:",
+      "inM (16 Bit): der Wert, der gerade aus dem RAM kommt, also RAM[A]. instruction (16 Bit): der aktuelle Befehl aus dem ROM. reset (1 Bit): Neustart des Programms.",
+      "Und vier Ausgänge: outM (16 Bit): der Wert, der in den RAM geschrieben werden soll. writeM (1 Bit): 1 heißt „jetzt wirklich in den RAM schreiben“. addressM (15 Bit): die RAM-Adresse, an die geschrieben wird (das ist der Inhalt von A). pc (15 Bit): die Adresse des nächsten Befehls im ROM.",
+      "Was die CPU in jedem Takt tut (S. 35): Ist der Befehl ein A-Befehl (@xxx), setzt sie A = xxx. Ist es ein C-Befehl, rechnet sie mit der ALU die verlangte Funktion aus A, D und inM, legt das Ergebnis in A, D und/oder outM ab und setzt writeM = 1, falls in M geschrieben werden soll. Danach entscheidet sie, welcher Befehl als Nächstes kommt.",
+      "Beispiel @5 und dann DM=M+1 (S. 34, in Hack-Schreibweise MD=M+1): Nach @5 ist A = 5, also addressM = 5. Steht in RAM[5] die 9, kommt inM = 9. Die ALU rechnet 9 + 1 = 10. D wird 10, outM = 10, writeM = 1. Nach dem Takt steht in RAM[5] die 10."
+     ],
+     "code": "            ┌────────── CPU ──────────┐\ninM ───────►│                         ├──► outM     (Wert für RAM)\ninstruction►│  A, D, ALU, PC          ├──► writeM   (1 = schreiben)\nreset ─────►│                         ├──► addressM (= A)\n            │                         ├──► pc       (nächster Befehl)\n            └─────────────────────────┘",
+     "merke": "CPU-Eingänge: inM, instruction, reset. Ausgänge: outM, writeM, addressM, pc."
+    },
+    {
+     "titel": "Im Inneren: wie die CPU einen A-Befehl ausführt",
+     "text": [
+      "Die CPU besteht aus Teilen, die du schon kennst: A-Register, D-Register, ALU, PC und zwei Mux16 (Multiplexer für 16-Bit-Zahlen). Jedes Teil hat Steuerbits (control bits, im Diagramm mit c markiert). Diese Steuerbits kommen direkt aus den Bits des Befehls (S. 36–37).",
+      "Das wichtigste Bit ist das höchste Bit des Befehls (MSB, most significant bit), der Op-Code. 0 heißt A-Befehl, 1 heißt C-Befehl (S. 40).",
+      "Vor dem A-Register sitzt ein Mux16. Er wählt, was ins A-Register kommt: entweder der Befehl selbst oder der Ausgang der ALU. Bei einem A-Befehl (MSB = 0) wählt er den Befehl, und A bekommt load = 1 (S. 39–41).",
+      "Ergebnis: Der Befehl wird als Zahl ins A-Register geladen. @5 ist binär 0000000000000101, und danach steht in A die 5. Genau das, was @xxx bedeutet: A = xxx.",
+      "Warum funktioniert das? Weil bei einem A-Befehl das MSB 0 ist, ist die Zahl automatisch eine 15-Bit-Zahl zwischen 0 und 32767. Das Bitmuster ist also gleichzeitig Befehl und Wert."
+     ],
+     "merke": "MSB = 0: der Mux vor A wählt den Befehl, A lädt ihn. So wird @xxx zu A = xxx."
+    },
+    {
+     "titel": "Im Inneren: wie die CPU einen C-Befehl ausführt",
+     "text": [
+      "Ein C-Befehl hat das Muster 111a cccccc ddd jjj (S. 42–43). Die vier Felder steuern je einen Teil der CPU. Alltagsbild: Ein Bestellzettel mit vier Kästchen, und jedes Kästchen geht an eine andere Station in der Küche.",
+      "Op-Code (das erste Bit, 1): Der Mux vor dem A-Register wählt jetzt den ALU-Ausgang statt des Befehls. So kann ein C-Befehl ein Ergebnis in A speichern (S. 44).",
+      "a-Bit und c-Bits (comp, S. 45): Das a-Bit steuert den zweiten Mux16 vor dem y-Eingang der ALU. a = 0 heißt: die ALU rechnet mit A. a = 1 heißt: sie rechnet mit M, also inM. Die sechs c-Bits gehen direkt an die ALU-Steuerbits zx, nx, zy, ny, f, no aus Kapitel 2. Die ALU bekommt also D als x und A oder M als y.",
+      "d-Bits (dest, S. 47–49): Der ALU-Ausgang geht gleichzeitig an das A-Register, das D-Register und den RAM-Ausgang outM. Die drei d-Bits sind die load-Bits: d1 für A, d2 für D, d3 für writeM. Nur wo das Bit 1 ist, wird das Ergebnis wirklich gespeichert.",
+      "j-Bits (jump): entscheiden zusammen mit dem Ergebnis der ALU, ob gesprungen wird (nächste Lektion).",
+      "Durchgerechnetes Beispiel (S. 42): 1110011111010111. Aufteilen: 111 | a = 0 | c = 011111 | d = 010 | j = 111. a = 0 heißt mit A rechnen, c = 011111 ist laut Tabelle D+1, d = 010 heißt nur D speichern, j = 111 heißt immer springen. Zusammen: D=D+1;JMP."
+     ],
+     "code": "1 1 1  a  c1 c2 c3 c4 c5 c6  d1 d2 d3  j1 j2 j3\n│      │  └───── an ALU ────┘  A  D  M   └ Sprung ┘\n│      └─ 0: ALU rechnet mit A, 1: mit M (inM)\n└─ Op-Code 1 = C-Befehl\n\nBeispiel 1110011111010111:\n111 | 0 | 011111 | 010 | 111  →  D=D+1;JMP",
+     "merke": "Op-Code wählt, was in A kommt. a wählt A oder M für die ALU. c-Bits steuern die ALU. d-Bits sind die load-Bits für A, D und writeM."
+    },
+    {
+     "titel": "Der Programmzähler und die Sprunglogik",
+     "text": [
+      "Der PC gibt immer die Adresse des nächsten Befehls aus (S. 52). Er kennt drei Fälle: reset: PC = 0 (Programm von vorn). Kein Sprung: PC = PC + 1. Sprung: PC = A. Wichtig: Das Sprungziel muss vorher mit einem A-Befehl in A gelegt worden sein, darum steht vor jedem Sprung ein @ZIEL.",
+      "Ob gesprungen wird, hängt von den drei j-Bits und vom ALU-Ergebnis ab. Die ALU liefert zwei Zusatzbits (aus Kapitel 2): zr = 1, wenn das Ergebnis 0 ist, und ng = 1, wenn es negativ ist (S. 54).",
+      "Die j-Bits lesen sich als drei Fragen: j1 = „springe, wenn negativ“, j2 = „springe, wenn null“, j3 = „springe, wenn positiv“. Gesprungen wird, wenn eine gestellte Frage mit Ja beantwortet wird. Deshalb ist JGE = 011 (null oder positiv) und JNE = 101 (negativ oder positiv, also nicht null).",
+      "Als Formel: load_PC = (j1 AND ng) OR (j2 AND zr) OR (j3 AND NOT zr AND NOT ng). Ist load_PC = 1, lädt der PC den Wert aus A, sonst zählt er hoch (S. 55).",
+      "Beispiel 1: ALU-Ergebnis −3, Sprung JGE (011). Ist −3 ≥ 0? Nein: ng = 1, zr = 0. j1 = 0, also zählt negativ nicht. Kein Sprung, PC = PC + 1.",
+      "Beispiel 2: ALU-Ergebnis −3, Sprung JLE (110). j1 = 1 und ng = 1, also Sprung, PC = A.",
+      "Beispiel 3: ALU-Ergebnis 0, Sprung JNE (101). zr = 1, aber j2 = 0. Kein Sprung."
+     ],
+     "code": "if (reset == 1)        PC = 0\nelse if (Sprung nötig) PC = A\nelse                   PC = PC + 1\n\nSprung nötig = (j1 AND ng) OR (j2 AND zr) OR (j3 AND NOT zr AND NOT ng)",
+     "merke": "j1 = bei negativ, j2 = bei null, j3 = bei positiv springen. Sprung heißt PC = A, sonst PC + 1, bei reset PC = 0."
+    },
+    {
+     "titel": "Der Speicher: RAM, Bildschirm und Tastatur in einem Adressraum",
+     "text": [
+      "Der Datenspeicher von Hack (Chip Memory, S. 59–61) besteht aus drei Teilen, die zusammen einen einzigen Adressraum von 0 bis 24576 bilden:",
+      "RAM16K für Adressen 0 bis 16383 (2^14 = 16384 Zellen, aus Projekt 3). Screen für Adressen 16384 bis 24575 (8K = 8192 Zellen, jede Zelle steuert 16 Pixel). Keyboard an Adresse 24576 (hex 0x6000): enthält den Code der gerade gedrückten Taste, sonst 0.",
+      "Der Chip Memory schaut auf die Adresse und leitet sie an den richtigen Teil weiter. Am einfachsten geht das über die obersten Bits der 15-Bit-Adresse: Bit 14 = 0 heißt RAM. Bit 14 = 1 und Bit 13 = 0 heißt Screen. Bit 14 = 1 und Bit 13 = 1 heißt Keyboard.",
+      "Warum? 16384 = 2^14 ist binär 100000000000000 (eine 1 und 14 Nullen). Alles darunter hat Bit 14 = 0. 24576 = 16384 + 8192 = 2^14 + 2^13, also Bits 14 und 13 gesetzt.",
+      "Beispiel Pixel: Der Bildschirm hat 256 Zeilen zu 512 Pixeln. Jede Zeile braucht 512 / 16 = 32 Wörter. Pixel in Zeile r, Spalte c liegt im Wort 16384 + 32·r + c/16 (ganzzahlig geteilt), dort im Bit c mod 16. Zeile 10, Spalte 37: 16384 + 320 + 2 = 16706, Bit 37 mod 16 = 5.",
+      "Alltagsbild: Eine Straße mit fortlaufenden Hausnummern. Die Nummern 0 bis 16383 sind Wohnhäuser (RAM), 16384 bis 24575 ist ein großes Kino (Bildschirm), und Nummer 24576 ist der Briefkasten, in dem die Tastatur ihre Nachricht ablegt."
+     ],
+     "code": "Adresse          Teil       Bits 14,13 der Adresse\n0     – 16383    RAM16K     0 x\n16384 – 24575    Screen     1 0\n24576            Keyboard   1 1\n\nPixel (r, c): Wort 16384 + 32*r + c/16, Bit c % 16",
+     "merke": "RAM 0–16383, Bildschirm 16384–24575, Tastatur 24576. Die obersten zwei Adressbits entscheiden, welcher Teil gemeint ist."
+    },
+    {
+     "titel": "Der ganze Computer: ROM, CPU, Memory und reset",
+     "text": [
+      "Der Befehlsspeicher ist der Chip ROM32K (S. 62–64): read-only memory mit 32K = 32768 Wörtern zu 16 Bit, Eingang address[15], Ausgang out[16]. Er ist fertig eingebaut (built-in) und schon mit dem Programm geladen. In echter Hardware tauscht man dafür den ROM-Chip aus, im Simulator lädt man eine Datei mit Befehlen.",
+      "Der Chip Computer verbindet drei Teile (S. 66–70): ROM32K, CPU und Memory. Die Verbindungen: ROM.out → CPU.instruction. CPU.pc → ROM.address. Memory.out → CPU.inM. CPU.outM, CPU.writeM und CPU.addressM → Memory.in, Memory.load, Memory.address.",
+      "Der einzige Eingang des Computers ist reset (S. 67–68). Programm starten: reset kurz auf 1 setzen (PC wird 0, der erste Befehl kommt), dann reset wieder auf 0. Danach läuft der Fetch-Execute-Zyklus von allein, Takt für Takt.",
+      "Damit ist die Hardware fertig: Aus Nand-Gattern wurde ein Computer, der jedes Hack-Programm ausführen kann. Das nächste Kapitel (Projekt 6) ist der Assembler, der Hack-Text in diese Bitmuster übersetzt (S. 72–73)."
+     ],
+     "code": "          ┌──────────┐ instruction ┌──────┐  outM, writeM,  ┌────────┐\n          │  ROM32K  ├────────────►│ CPU  ├────addressM────►│ Memory │\n          │ (Programm)│◄────pc──────┤      │◄──────inM───────┤(RAM,   │\n          └──────────┘             └──▲───┘                 │Screen, │\nreset ─────────────────────────────────┘                     │ KBD)   │\n                                                             └────────┘",
+     "merke": "Computer = ROM32K + CPU + Memory. reset 1 → PC = 0, reset 0 → Programm läuft."
+    },
+    {
+     "titel": "Hack-Befehle Schritt für Schritt verfolgen",
+     "text": [
+      "In der Klausur und auf Blatt 4 sollst du Hack-Code Zeile für Zeile verfolgen. Das geht immer mit einer Tabelle: eine Zeile pro Befehl, Spalten für A, D, PC und die betroffenen RAM-Zellen. Bei jedem Befehl änderst du nur, was der Befehl wirklich ändert.",
+      "Regeln: @xxx ändert nur A (und PC + 1). Bei einem C-Befehl wird zuerst mit den alten Werten gerechnet, dann gespeichert. M meint RAM[A] mit dem A vor dem Befehl. PC steigt um 1, außer es wird gesprungen.",
+      "Beispiel (eigene Zahlen): R0 = 9, R1 = 5, alles andere 0. Programm: @R0, D=M, @R1, D=D+M, @R2, MD=D-1.",
+      "@R0: A = 0, PC = 1. D=M: D = RAM[0] = 9, PC = 2. @R1: A = 1, PC = 3. D=D+M: D = 9 + RAM[1] = 9 + 5 = 14, PC = 4. @R2: A = 2, PC = 5. MD=D-1: Ergebnis 14 − 1 = 13, das kommt in RAM[2] und in D, PC = 6.",
+      "Endstand: A = 2, D = 13, PC = 6, R2 = 13. Der Unterschied zwischen @R1 und D=M: @R1 legt nur die Adresse 1 in A (zeigt auf das Fach), D=M liest den Inhalt dieses Fachs nach D."
+     ],
+     "code": "Befehl    A   D   PC  R2\n@R0       0   0   1   0\nD=M       0   9   2   0\n@R1       1   9   3   0\nD=D+M     1  14   4   0\n@R2       2  14   5   0\nMD=D-1    2  13   6  13",
+     "merke": "Tabelle mit A, D, PC und RAM-Zellen. Erst rechnen, dann speichern. M = RAM[A]."
+    }
+   ],
+   "zusammenfassung": [
+    "Kapitel 5 baut aus ALU, Registern, RAM und PC die Hack-CPU und daraus den Hack-Computer.",
+    "Grundarchitektur: CPU (ALU, Register, PC) und Speicher, verbunden über Datenbus, Adressbus und Steuerbus.",
+    "Fetch-Execute-Zyklus: Befehl an Adresse PC holen, ausführen, nächsten Befehl bestimmen (PC + 1 oder Sprungziel).",
+    "Ein Speicher braucht zwei Takte (Fetch, Execute) und ein Befehlsregister. Zwei Speicher (Harvard, Hack): ein Takt, aber zwei Chips und getrennte Adressräume.",
+    "CPU-Schnittstelle: Eingänge inM, instruction, reset. Ausgänge outM, writeM, addressM, pc.",
+    "A-Befehl (MSB 0): Mux vor A wählt den Befehl, A = Befehlswert.",
+    "C-Befehl 111a cccccc ddd jjj: a wählt A oder M als ALU-Eingang y, c-Bits steuern die ALU, d-Bits sind load für A, D, writeM, j-Bits steuern den Sprung.",
+    "PC: reset → 0, Sprung → A, sonst + 1. Sprung, wenn (j1 und ng) oder (j2 und zr) oder (j3 und nicht zr und nicht ng).",
+    "Memory: RAM16K 0–16383, Screen 16384–24575, Keyboard 24576 (0x6000). ROM32K ist der Befehlsspeicher.",
+    "Computer = ROM32K + CPU + Memory, einziger Eingang reset."
+   ],
+   "karten": [
+    {
+     "f": "Was ist ein Bus?",
+     "a": "Ein Bündel Leitungen, das eine Zahl von einem Chip zum anderen trägt, wie eine mehrspurige Straße mit einem Bit pro Spur.",
+     "q": "Lecture 5, S. 18"
+    },
+    {
+     "f": "Datenbus, Adressbus, Steuerbus: was trägt welcher?",
+     "a": "Datenbus: Werte. Adressbus: Nummern von Speicherzellen. Steuerbus: Signale, was zu tun ist (z. B. schreiben). Getrennt, weil ein Chip gleichzeitig wissen muss, wo, was und ob.",
+     "q": "Lecture 5, S. 16–18"
+    },
+    {
+     "f": "Was passiert im Fetch-Execute-Zyklus?",
+     "a": "Fetch: Befehl an der Adresse im PC aus dem Speicher holen. Execute: Befehl ausführen. Dabei wird bestimmt, welcher Befehl als Nächstes kommt.",
+     "q": "Lecture 5, S. 20–24"
+    },
+    {
+     "f": "Was macht der Programmzähler PC?",
+     "a": "Er gibt immer die Adresse des nächsten Befehls aus, wie ein Finger auf der aktuellen Rezeptzeile.",
+     "q": "Lecture 5, S. 21"
+    },
+    {
+     "f": "Welches Problem hat ein Computer mit nur einem Speicher für Programm und Daten?",
+     "a": "Der Speicher bräuchte gleichzeitig die Befehlsadresse und die Datenadresse, und die CPU muss wissen, ob ein Wert Befehl oder Datum ist. Lösung: zwei Takte (Fetch, Execute) mit Befehlsregister.",
+     "q": "Lecture 5, S. 25–28"
+    },
+    {
+     "f": "Was ist die Harvard-Architektur? Vor- und Nachteile?",
+     "a": "Befehle und Daten in zwei getrennten Speichern, beide im selben Takt gelesen. Vorteile: einfach, schnell. Nachteile: zwei Speicherchips, getrennte Adressräume. Hack nutzt sie (ROM und RAM).",
+     "q": "Lecture 5, S. 29–30"
+    },
+    {
+     "f": "Welche Eingänge und Ausgänge hat die Hack-CPU?",
+     "a": "Ein: inM, instruction, reset. Aus: outM, writeM, addressM, pc.",
+     "q": "Lecture 5, S. 33–35"
+    },
+    {
+     "f": "Was bedeutet writeM = 1?",
+     "a": "Der Wert auf outM wird in diesem Takt wirklich in RAM[addressM] geschrieben. Ohne writeM liegt outM nur an, ändert aber nichts.",
+     "q": "Lecture 5, S. 35"
+    },
+    {
+     "f": "Wie führt die CPU einen A-Befehl aus?",
+     "a": "Das MSB ist 0. Der Mux16 vor dem A-Register wählt den Befehl statt des ALU-Ausgangs, A lädt ihn. So wird @xxx zu A = xxx.",
+     "q": "Lecture 5, S. 39–41"
+    },
+    {
+     "f": "Wozu dient das a-Bit im C-Befehl?",
+     "a": "Es steuert den Mux16 vor dem y-Eingang der ALU: a = 0 rechnet mit A, a = 1 mit M (inM). Darum kann ein Befehl nie A und M zugleich benutzen.",
+     "q": "Lecture 5, S. 45"
+    },
+    {
+     "f": "Wohin gehen die sechs c-Bits?",
+     "a": "Direkt an die ALU-Steuerbits zx, nx, zy, ny, f, no. Die ALU aus Kapitel 2 rechnet dann genau die gewünschte Funktion.",
+     "q": "Lecture 5, S. 45"
+    },
+    {
+     "f": "Was machen die d-Bits in der CPU?",
+     "a": "Sie sind die load-Bits: d1 für A, d2 für D, d3 für writeM. Der ALU-Ausgang liegt an allen drei an, gespeichert wird nur, wo das Bit 1 ist.",
+     "q": "Lecture 5, S. 47–49"
+    },
+    {
+     "f": "Wann springt der PC?",
+     "a": "Wenn (j1 und ng) oder (j2 und zr) oder (j3 und weder zr noch ng). Dann PC = A, sonst PC + 1, bei reset PC = 0.",
+     "q": "Lecture 5, S. 52–55"
+    },
+    {
+     "f": "Was bedeuten zr und ng?",
+     "a": "Zusatzausgänge der ALU: zr = 1, wenn das Ergebnis 0 ist. ng = 1, wenn es negativ ist. Aus ihnen und den j-Bits folgt der Sprung.",
+     "q": "Lecture 5, S. 54"
+    },
+    {
+     "f": "Wie ist der Hack-Datenspeicher aufgeteilt?",
+     "a": "RAM16K 0–16383, Screen 16384–24575 (8K Wörter), Keyboard 24576 (0x6000).",
+     "q": "Lecture 5, S. 60–61"
+    },
+    {
+     "f": "Woran erkennt Memory, welcher Teil gemeint ist?",
+     "a": "An den obersten Adressbits: Bit 14 = 0 → RAM. Bit 14 = 1, Bit 13 = 0 → Screen. Beide 1 → Keyboard. Weil 16384 = 2^14 und 24576 = 2^14 + 2^13.",
+     "q": "Lecture 5, S. 61 (Bit-Begründung: eigene Erklärung)"
+    },
+    {
+     "f": "Was ist ROM32K?",
+     "a": "Der Befehlsspeicher von Hack: 32K Wörter, nur lesen, fertig eingebaut und mit dem Programm vorgeladen.",
+     "q": "Lecture 5, S. 62–64"
+    },
+    {
+     "f": "Aus welchen Teilen besteht der Chip Computer und wie startet man ein Programm?",
+     "a": "ROM32K, CPU, Memory. reset auf 1 (PC = 0), dann auf 0: ab dann läuft der Fetch-Execute-Zyklus.",
+     "q": "Lecture 5, S. 66–68"
+    }
+   ],
+   "quiz": [
+    {
+     "typ": "mc",
+     "frage": "Welcher Bus trägt die Nummer der Speicherzelle, die gelesen werden soll?",
+     "optionen": [
+      "Datenbus",
+      "Adressbus",
+      "Steuerbus",
+      "Befehlsbus"
+     ],
+     "richtig": 1,
+     "erklaerung": "Die Nummer einer Speicherzelle ist eine Adresse. Werte laufen über den Datenbus, Steuersignale über den Steuerbus.",
+     "q": "Lecture 5, S. 17–18"
+    },
+    {
+     "typ": "mc",
+     "frage": "Was gibt der Programmzähler PC aus?",
+     "optionen": [
+      "Das Ergebnis der ALU",
+      "Den aktuellen Befehl",
+      "Die Adresse des nächsten Befehls",
+      "Die Adresse der nächsten Datenzelle"
+     ],
+     "richtig": 2,
+     "erklaerung": "Der PC merkt sich, wo im Programm es weitergeht. Den Befehl selbst liefert der Speicher (ROM).",
+     "q": "Lecture 5, S. 21"
+    },
+    {
+     "typ": "mc",
+     "frage": "Hack hat getrennte Speicher für Befehle und Daten. Welcher Nachteil folgt daraus?",
+     "optionen": [
+      "Jeder Befehl braucht zwei Takte",
+      "Man braucht ein Befehlsregister",
+      "Zwei Speicherchips und getrennte Adressräume",
+      "Die CPU kann nicht springen"
+     ],
+     "richtig": 2,
+     "erklaerung": "Bei der Harvard-Lösung gibt es zwei Chips, und Adresse 5 im ROM ist etwas anderes als Adresse 5 im RAM. Zwei Takte und Befehlsregister braucht gerade die andere Lösung mit einem Speicher.",
+     "q": "Lecture 5, S. 29–30"
+    },
+    {
+     "typ": "mc",
+     "frage": "Wozu braucht die Zwei-Takt-Maschine mit einem Speicher ein Befehlsregister?",
+     "optionen": [
+      "Um Daten schneller zu lesen",
+      "Um den Befehl aus dem Fetch-Takt für den Execute-Takt festzuhalten",
+      "Um den PC zu ersetzen",
+      "Um zwei Speicher zu verbinden"
+     ],
+     "richtig": 1,
+     "erklaerung": "Im zweiten Takt liefert der Speicher einen Datenwert. Der Befehl muss bis dahin irgendwo bleiben, sonst wäre er weg.",
+     "q": "Lecture 5, S. 27–28"
+    },
+    {
+     "typ": "mc",
+     "frage": "Was entscheidet bei einem C-Befehl, ob die ALU mit A oder mit M rechnet?",
+     "optionen": [
+      "Das Op-Code-Bit",
+      "Das a-Bit",
+      "Das d1-Bit",
+      "Das j3-Bit"
+     ],
+     "richtig": 1,
+     "erklaerung": "Das a-Bit steuert den Mux16 vor dem y-Eingang der ALU: 0 = A, 1 = M.",
+     "q": "Lecture 5, S. 45"
+    },
+    {
+     "typ": "mc",
+     "frage": "Welche Ausgänge der CPU sind bei D=D+1 (kein M im dest) für den RAM entscheidend?",
+     "optionen": [
+      "writeM = 0, es wird nichts geschrieben",
+      "writeM = 1, RAM[A] wird D+1",
+      "addressM = D",
+      "pc = 0"
+     ],
+     "richtig": 0,
+     "erklaerung": "M steht nicht im dest-Teil, also ist d3 = 0 und damit writeM = 0. outM liegt an, wird aber nicht gespeichert.",
+     "q": "Lecture 5, S. 47–49"
+    },
+    {
+     "typ": "text",
+     "frage": "Übersetze 1110011111010111 in Hack-Assembler (ohne Leerzeichen).",
+     "loesung": [
+      "D=D+1;JMP"
+     ],
+     "erklaerung": "111 | a = 0 | c = 011111 (D+1) | d = 010 (nur D) | j = 111 (JMP).",
+     "q": "Lecture 5, S. 42"
+    },
+    {
+     "typ": "text",
+     "frage": "Übersetze 1111110000010000 in Hack-Assembler (ohne Leerzeichen).",
+     "loesung": [
+      "D=M"
+     ],
+     "erklaerung": "a = 1, also M statt A. c = 110000 ist A (hier M). d = 010 heißt D. j = 000: kein Sprung.",
+     "q": "Eigene Übung"
+    },
+    {
+     "typ": "text",
+     "frage": "Wie lautet MD=M+1 als 16-Bit-Muster?",
+     "loesung": [
+      "1111110111011000"
+     ],
+     "erklaerung": "111, a = 1 (M), c = 110111 (A+1, mit a = 1 also M+1), d = 011 (D und M), j = 000.",
+     "q": "Eigene Übung"
+    },
+    {
+     "typ": "mc",
+     "frage": "Das ALU-Ergebnis ist −3, der Befehl hat JGE. Was passiert mit dem PC?",
+     "optionen": [
+      "PC = A",
+      "PC = PC + 1",
+      "PC = 0",
+      "PC = −3"
+     ],
+     "richtig": 1,
+     "erklaerung": "JGE springt bei ≥ 0. −3 ist negativ (ng = 1), j1 ist bei JGE aber 0. Kein Sprung, also PC + 1.",
+     "q": "Lecture 5, S. 54–55"
+    },
+    {
+     "typ": "mc",
+     "frage": "Welche j-Bits gehören zu JNE?",
+     "optionen": [
+      "010",
+      "101",
+      "110",
+      "011"
+     ],
+     "richtig": 1,
+     "erklaerung": "„Nicht gleich null“ heißt negativ oder positiv: j1 = 1 und j3 = 1, j2 = 0.",
+     "q": "Lecture 5, S. 54"
+    },
+    {
+     "typ": "zahl",
+     "frage": "An welcher Adresse liegt die Tastatur im Hack-Speicher (dezimal)?",
+     "loesung": 24576,
+     "toleranz": 0,
+     "einheit": "",
+     "erklaerung": "16384 (Beginn Screen) + 8192 (Screen-Größe) = 24576 = 0x6000.",
+     "q": "Lecture 5, S. 60–61"
+    },
+    {
+     "typ": "zahl",
+     "frage": "Welche Speicheradresse enthält das Pixel in Zeile 10, Spalte 37?",
+     "loesung": 16706,
+     "toleranz": 0,
+     "einheit": "",
+     "erklaerung": "16384 + 32·10 + 37/16 (ganzzahlig 2) = 16384 + 320 + 2 = 16706. Das Pixel ist Bit 37 mod 16 = 5.",
+     "q": "Eigene Übung (Bildschirm-Abbildung aus Kapitel 4/5)"
+    },
+    {
+     "typ": "mc",
+     "frage": "Die Adresse hat in Bit 14 eine 1 und in Bit 13 eine 0. Welcher Teil ist gemeint?",
+     "optionen": [
+      "RAM16K",
+      "Screen",
+      "Keyboard",
+      "ROM32K"
+     ],
+     "richtig": 1,
+     "erklaerung": "Bit 14 = 1 heißt ≥ 16384, Bit 13 = 0 heißt < 24576. Das ist der Bildschirmbereich.",
+     "q": "Lecture 5, S. 61 (eigene Erklärung)"
+    },
+    {
+     "typ": "zahl",
+     "frage": "Welchen Wert hat D nach diesem Code?",
+     "code": "@7\nD=A\n@R5\nM=D\nMD=M+1",
+     "loesung": 8,
+     "toleranz": 0,
+     "einheit": "",
+     "erklaerung": "D = 7, RAM[5] = 7. MD=M+1: 7 + 1 = 8 kommt in RAM[5] und in D.",
+     "q": "Eigene Übung"
+    },
+    {
+     "typ": "zahl",
+     "frage": "Welchen Wert hat PC direkt nach dem letzten Befehl?",
+     "code": "@3\nD=A\n@10\nD=D-A\n@20\nD;JLT",
+     "loesung": 20,
+     "toleranz": 0,
+     "einheit": "",
+     "erklaerung": "D = 3 − 10 = −7. @20 legt 20 in A. D;JLT: −7 < 0, also Sprung, PC = A = 20.",
+     "q": "Eigene Übung"
+    },
+    {
+     "typ": "zahl",
+     "frage": "Vorher ist RAM[100] = 41. Welchen Wert hat A nach dem Code?",
+     "code": "@100\nAM=M+1",
+     "loesung": 42,
+     "toleranz": 0,
+     "einheit": "",
+     "erklaerung": "M = RAM[100] = 41. M+1 = 42 kommt in RAM[100] und in A. Danach zeigt A also auf Adresse 42.",
+     "q": "Eigene Übung"
+    },
+    {
+     "typ": "mc",
+     "frage": "Wie startet man ein Programm auf dem Chip Computer?",
+     "optionen": [
+      "writeM auf 1 setzen",
+      "reset auf 1, dann auf 0 setzen",
+      "PC von Hand auf 1 setzen",
+      "ROM32K neu bauen"
+     ],
+     "richtig": 1,
+     "erklaerung": "reset = 1 setzt den PC auf 0. Mit reset = 0 läuft der Fetch-Execute-Zyklus ab dem ersten Befehl.",
+     "q": "Lecture 5, S. 67–68"
+    }
+   ],
+   "formeln": [
+    {
+     "name": "Fetch-Execute-Zyklus",
+     "code": "loop:\n  befehl = ROM[PC]        // fetch\n  führe befehl aus         // execute\n  PC = Sprung ? A : PC + 1",
+     "text": "Jeder Takt holt einen Befehl und führt ihn aus.",
+     "q": "Lecture 5, S. 20–24"
+    },
+    {
+     "name": "CPU-Schnittstelle",
+     "code": "IN  inM[16], instruction[16], reset\nOUT outM[16], writeM, addressM[15], pc[15]",
+     "text": "addressM ist der Inhalt von A.",
+     "q": "Lecture 5, S. 33"
+    },
+    {
+     "name": "C-Befehl als Bits",
+     "code": "1 1 1 a c1 c2 c3 c4 c5 c6 d1 d2 d3 j1 j2 j3\na: 0 = A, 1 = M\nd1 = A, d2 = D, d3 = M (writeM)\nj1 = <0, j2 = =0, j3 = >0",
+     "text": "Jedes Feld steuert ein Bauteil der CPU.",
+     "q": "Lecture 5, S. 43–54"
+    },
+    {
+     "name": "Sprungbedingung",
+     "code": "load_PC = (j1 AND ng) OR (j2 AND zr)\n        OR (j3 AND NOT zr AND NOT ng)",
+     "text": "zr: Ergebnis 0, ng: Ergebnis negativ.",
+     "q": "Lecture 5, S. 54"
+    },
+    {
+     "name": "PC-Regel",
+     "code": "if reset:      PC = 0\nelif load_PC:  PC = A\nelse:          PC = PC + 1",
+     "text": "Das Sprungziel muss vorher in A stehen.",
+     "q": "Lecture 5, S. 52–55"
+    },
+    {
+     "name": "Speicherkarte",
+     "code": "0     – 16383   RAM16K\n16384 – 24575   SCREEN (8K)\n24576           KBD (0x6000)\nPixel (r,c): 16384 + 32*r + c/16, Bit c%16",
+     "text": "Ein Adressraum für RAM und Ein-/Ausgabe.",
+     "q": "Lecture 5, S. 59–61"
+    },
+    {
+     "name": "Computer-Verdrahtung",
+     "code": "ROM.out  -> CPU.instruction\nCPU.pc   -> ROM.address\nMem.out  -> CPU.inM\nCPU.outM, writeM, addressM -> Mem.in, load, address",
+     "text": "Einziger Eingang des Computers: reset.",
+     "q": "Lecture 5, S. 66–70"
+    }
+   ],
+   "aufgaben": [
+    {
+     "titel": "Blatt 04, Aufgabe 1.1: Ausführung von Hack-Instruktionen",
+     "q": "Aufgabenblatt 4, Aufgabe 1.1 (noch ohne Lösungsvorschlag)",
+     "text": "Anfangswerte R0 = 7, R1 = 4. A, D, PC und R2 sind anfangs 0. a) Gib nach jeder Instruktion die Werte von A, D, PC und R2 an. b) Erläutere den Unterschied zwischen @R1 und D = M. c) Welche beiden Speicherorte aktualisiert MD = D + 1?",
+     "code": "@R0\nD=M\n@R1\nD=D-M\n@R2\nMD=D+1",
+     "loesung": [
+      "Lösung folgt, sobald der offizielle Lösungsvorschlag auf ISIS ist.",
+      "Bis dahin: Die Methode steht in der Lektion „Hack-Befehle Schritt für Schritt verfolgen“, und die eigene Übung unten hat eine Lösung zum Vergleichen."
+     ]
+    },
+    {
+     "titel": "Blatt 04, Aufgabe 1.2: Algebra → Assembler",
+     "q": "Aufgabenblatt 4, Aufgabe 1.2 (noch ohne Lösungsvorschlag)",
+     "text": "x, y, z sind die Anfangsinhalte von R0, R1, R2. Ergebnis jeweils in R3, Eingaben bleiben unverändert, R4 und R5 dürfen Zwischenspeicher sein. Möglichst wenige Instruktionen. 1. r = x + y − 7. 2. r = 2x − y + 3. 3. r = (x − y) − (z + 4).",
+     "loesung": [
+      "Lösung folgt, sobald der offizielle Lösungsvorschlag auf ISIS ist.",
+      "Bis dahin: siehe eigene Übung „Algebra → Assembler“ mit anderen Termen."
+     ]
+    },
+    {
+     "titel": "Blatt 04, Aufgabe 1.3: Assembler → Algebra",
+     "q": "Aufgabenblatt 4, Aufgabe 1.3 (noch ohne Lösungsvorschlag)",
+     "text": "Gib für jede Sequenz einen Term für den Endinhalt von R3 an (x, y, z = Anfangsinhalte von R0, R1, R2). Drei Sequenzen, durch Leerzeilen getrennt.",
+     "loesung": [
+      "Lösung folgt, sobald der offizielle Lösungsvorschlag auf ISIS ist.",
+      "Bis dahin: siehe eigene Übung „Assembler → Algebra“."
+     ],
+     "code": "@R0\nD=M\n@R1\nD=M-D\n@4\nD=D+A\n@R3\nM=D\n\n@R0\nD=M\n@R1\nD=D+M\n@R4\nM=D\nD=D+M\n@3\nD=D-A\n@R3\nM=D\n\n@R0\nMD=M-1\n@R1\nD=D-M\n@R0\nD=D+M\n@R2\nD=D-M\n@R3\nM=D"
+    },
+    {
+     "titel": "Eigene Übung: Ablauf mit Tabelle verfolgen",
+     "q": "Eigene Übung (Methode wie Blatt 04)",
+     "text": "R0 = 9, R1 = 5, A, D, PC und R2 anfangs 0. Gib nach jedem Befehl A, D, PC und R2 an.",
+     "code": "@R0\nD=M\n@R1\nD=D+M\n@R2\nMD=D-1",
+     "loesung": [
+      "Regel: @ ändert nur A. Bei C-Befehlen erst mit den alten Werten rechnen, dann speichern. PC + 1 nach jedem Befehl (kein Sprung).",
+      "@R0: A = 0, D = 0, PC = 1, R2 = 0.",
+      "D=M: D = RAM[0] = 9, PC = 2.",
+      "@R1: A = 1, PC = 3.",
+      "D=D+M: D = 9 + RAM[1] = 14, PC = 4.",
+      "@R2: A = 2, PC = 5.",
+      "MD=D-1: 14 − 1 = 13 in RAM[2] und D, PC = 6.",
+      "Endstand: A = 2, D = 13, PC = 6, R2 = 13. Mit eigenem Hack-Simulator geprüft."
+     ]
+    },
+    {
+     "titel": "Eigene Übung: Algebra → Assembler",
+     "q": "Eigene Übung (Methode wie Blatt 04)",
+     "text": "x, y, z in R0, R1, R2, Ergebnis in R3, Eingaben unverändert, R4 als Zwischenspeicher erlaubt. 1. r = x − y + 5. 2. r = 3x − 2. 3. r = (x − z) − (y + 3).",
+     "loesung": [
+      "1. Erst x nach D, dann y abziehen, dann die Konstante mit @5 in A legen und D+A rechnen. Konstanten kommen immer über A in die Rechnung, weil die ALU nur 0, 1 und −1 kennt.",
+      "2. 3x = x + x + x: D = x, dann zweimal D=D+M mit A auf R0. Danach @2, D=D-A.",
+      "3. Erst y + 3 nach R4 retten, dann x − z rechnen und R4 abziehen. Zwischenspeicher braucht man, weil D nur eine Zahl halten kann.",
+      "Alle drei mit je 108 Wertekombinationen im Hack-Simulator geprüft, Eingaben bleiben unverändert."
+     ],
+     "loesungCode": "// 1. r = x - y + 5\n@R0\nD=M\n@R1\nD=D-M\n@5\nD=D+A\n@R3\nM=D\n\n// 2. r = 3x - 2\n@R0\nD=M\nD=D+M\n@R0\nD=D+M\n@2\nD=D-A\n@R3\nM=D\n\n// 3. r = (x - z) - (y + 3)\n@R1\nD=M\n@3\nD=D+A\n@R4\nM=D\n@R0\nD=M\n@R2\nD=D-M\n@R4\nD=D-M\n@R3\nM=D"
+    },
+    {
+     "titel": "Eigene Übung: Assembler → Algebra",
+     "q": "Eigene Übung (Methode wie Blatt 04)",
+     "text": "x, y, z sind die Anfangsinhalte von R0, R1, R2. Welchen Term enthält R3 am Ende? (Drei Programme, durch Leerzeilen getrennt.)",
+     "code": "@R1\nD=M\n@R0\nD=D-M\n@6\nD=A-D\n@R3\nM=D\n\n@R2\nD=M\n@R4\nM=D\nD=D+M\n@R0\nD=D+M\n@R3\nM=D\n\n@R1\nMD=M+1\n@R0\nD=D-M\n@R1\nD=D+M\n@R3\nM=D",
+     "loesung": [
+      "Programm 1: D = y, dann D = y − x. @6 und D=A-D: 6 − (y − x). R3 = x − y + 6. Achtung: A-D, nicht D-A.",
+      "Programm 2: D = z, R4 = z, D=D+M: z + z = 2z. Dann + x. R3 = 2z + x.",
+      "Programm 3: MD=M+1 erhöht R1 auf y + 1 und legt das auch in D. Dann D = (y + 1) − x. A zeigt wieder auf R1, das jetzt y + 1 enthält: D = (y + 1 − x) + (y + 1). R3 = 2y + 2 − x. Achtung: R1 wurde dabei verändert.",
+      "Alle drei mit 36 Wertekombinationen im Hack-Simulator geprüft."
+     ]
+    },
+    {
+     "titel": "Eigene Übung: Befehle zwischen Bits und Text übersetzen",
+     "q": "Eigene Übung",
+     "text": "a) Übersetze in Assembler: 1110001100001000 und 1110101010000111. b) Übersetze in Bits: D;JGT und AM=M-1.",
+     "loesung": [
+      "a) 1110001100001000: a = 0, c = 001100 (D), d = 001 (M), j = 000 → M=D.",
+      "1110101010000111: a = 0, c = 101010 (0), d = 000, j = 111 → 0;JMP.",
+      "b) D;JGT: kein dest, comp D = 001100 mit a = 0, j = 001 → 1110001100000001.",
+      "AM=M-1: a = 1, comp A-1 = 110010, d = 101 (A und M), j = 000 → 1111110010101000.",
+      "Mit eigenem Assembler geprüft."
+     ]
+    },
+    {
+     "titel": "Eigene Übung: Sprungentscheidung der CPU",
+     "q": "Eigene Übung",
+     "text": "Für jeden Fall: Springt die CPU? Wie lautet danach der PC? Gegeben PC = 12, A = 40. a) ALU-Ergebnis −3, JGE. b) ALU-Ergebnis −3, JLE. c) ALU-Ergebnis 0, JNE. d) ALU-Ergebnis 7, JGT.",
+     "loesung": [
+      "Erst zr und ng bestimmen, dann prüfen, ob ein gesetztes j-Bit passt.",
+      "a) ng = 1, JGE = 011: j1 = 0 → kein Sprung, PC = 13.",
+      "b) ng = 1, JLE = 110: j1 = 1 → Sprung, PC = 40.",
+      "c) zr = 1, JNE = 101: j2 = 0 → kein Sprung, PC = 13.",
+      "d) weder zr noch ng, JGT = 001: j3 = 1 → Sprung, PC = 40."
+     ]
+    }
+   ]
   }
  ]
-});
+}
+);

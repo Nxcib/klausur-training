@@ -34,6 +34,14 @@ window.FAECHER.push({
    "titel": "Kapitel 0: Start – vom Algorithmus zum ersten Programm",
    "abschnitt": "VL ab 15.10.2026 (Kick-off, Foundations), Tutorium 0 und 1 ab 26.10.",
    "seiten": "Folien 00-KickOff, 01-Foundations, Skript Imperative Programming Abschnitt 1, Tutorium 0 (Intro IntelliJ), Tutorium 1 (Grundlagen)",
+   "kurz": [
+     "Algorithmus: endliche Folge eindeutiger Anweisungen, die ein Problem löst.",
+     "javac übersetzt .java in Bytecode (.class), die JVM führt ihn aus. Start mit java HelloWorld, ohne Endung.",
+     "Jedes Programm braucht public static void main(String[] args). Die public class heißt wie die Datei.",
+     "Anweisungen enden mit Semikolon, Blöcke stehen in { }. Java unterscheidet Groß- und Kleinschreibung.",
+     "+ verkettet von links nach rechts: „x“ + 1 + 2 ergibt x12.",
+     "Drei Fehlerarten: Compilerfehler (kein gültiges Java), Laufzeitfehler (Exception), logischer Fehler (läuft, rechnet aber falsch)."
+   ],
    "quellen": [
     {
      "name": "Vorlesung 0: Kick-off",
@@ -535,6 +543,14 @@ window.FAECHER.push({
    "titel": "Kapitel 1: Grundlagen – Variablen, Datentypen, Operatoren, Strings",
    "abschnitt": "VL ab 22.10.2026 (Imperative Programming, Skript Abschnitt 2–6), Tutorium 2 Aufgaben 1–7, 21, 25",
    "seiten": "Skript Imperative Programming, Abschnitt 2 (Variablen), 3 (Eingabe), 4 (Typecasts), 5 (Operatoren), 6 (Math); OOP-Folien 40–48 (String, Wrapper)",
+   "kurz": [
+     "Variable = Name + Typ + Wert. int x = 5; heißt: rechts ausrechnen, links speichern.",
+     "Ganzzahldivision schneidet ab: 7 / 2 = 3. Ein double reicht für Kommarechnung: 7 / 2.0 = 3.5.",
+     "% ist der Rest: 7 % 2 = 1. x++ liefert den alten Wert, ++x den neuen.",
+     "Von klein nach groß wird automatisch umgewandelt. Umgekehrt explizit: (int) 3.99 = 3, es wird abgeschnitten.",
+     "Überlauf: Integer.MAX_VALUE + 1 = Integer.MIN_VALUE. double nie mit == vergleichen.",
+     "Strings sind unveränderlich. Inhalt immer mit equals vergleichen, nie mit ==."
+   ],
    "quellen": [
     {
      "name": "Skript: Imperative Programming",
@@ -1153,6 +1169,14 @@ window.FAECHER.push({
    "titel": "Kapitel 2: Imperatives Programmieren – Verzweigungen, Schleifen, Arrays, Methoden, Rekursion",
    "abschnitt": "VL ca. 26.10.–12.11.2026 (Skript Abschnitt 7–10, Folien Recursion und Javadoc), Tutorium 2",
    "seiten": "Skript Imperative Programming, Abschnitt 7 (if, switch), 8 (Arrays), 9 (Schleifen), 10 (Methoden, Überladen, Varargs); Folien 02-ImperativeRest (Rekursion, Javadoc)",
+   "kurz": [
+     "if braucht eine boolean-Bedingung. Typischer Fehler: if (x); mit Semikolon ist ein leerer Zweig.",
+     "switch springt zum passenden case und läuft ohne break einfach weiter (fall-through).",
+     "while prüft vorher, do-while nachher (mindestens ein Durchlauf). for (int i = 0; i < n; i++) wiederholt n-mal.",
+     "Arrays haben feste Länge, Index 0 bis length - 1. Falscher Index gibt ArrayIndexOutOfBoundsException.",
+     "Arrays sind Referenzen: b = a kopiert nur den Verweis. Parameter sind Kopien (call by value).",
+     "Rekursion: Methode ruft sich mit kleinerem Problem auf und braucht einen Basisfall, sonst StackOverflowError."
+   ],
    "quellen": [
     {
      "name": "Skript: Imperative Programming",
@@ -1869,6 +1893,14 @@ window.FAECHER.push({
    "titel": "Kapitel 3: Objektorientierung – Klassen, Objekte, Vererbung, Interfaces",
    "abschnitt": "VL ab 13.11.2026 (Part III: Object-Oriented Programming), Tutorium 3",
    "seiten": "Folien 03-OOP: III-A Classes and Objects, III-B Data Representation Classes, III-C Inheritance and Object Creation, III-D Abstract Types and Enums, III-E Advanced OOP Concepts",
+   "kurz": [
+     "Klasse = Bauplan mit Attributen und Methoden. Objekt = Instanz davon, erzeugt mit new.",
+     "Konstruktor heißt wie die Klasse und hat keinen Rückgabetyp. this.x = x unterscheidet Attribut und Parameter.",
+     "Kapselung: Attribute private, Zugriff über Getter und Setter. static gehört zur Klasse, nicht zum Objekt.",
+     "== vergleicht Referenzen, equals den Inhalt. Zugriff auf null gibt eine NullPointerException.",
+     "Vererbung mit extends, super(...) steht als erste Zeile im Konstruktor. Jede Klasse erbt von Object.",
+     "Dynamische Bindung: Der deklarierte Typ bestimmt, was erlaubt ist, der tatsächliche Typ, welche Methode läuft."
+   ],
    "quellen": [
     {
      "name": "Vorlesung 3: Object-Oriented Programming",
@@ -2560,6 +2592,14 @@ window.FAECHER.push({
    "titel": "Kapitel 4: Algorithmen und Datenstrukturen – Suchen, Sortieren, Listen, Bäume, Generics",
    "abschnitt": "Vorlesung folgt (ca. Dezember 2026), Tutoriumsmaterial liegt vor (Tutorium 4)",
    "seiten": "Tutorium 4 (Algorithmen und Datenstrukturen) mit Musterlösung; Kick-off Folie 24 (Themenüberblick); Altklausuren",
+   "kurz": [
+     "Lineare Suche prüft alles, O(n), auch unsortiert. Binäre Suche halbiert, O(log n), nur auf sortierten Daten.",
+     "O-Notation: Wachstum im schlimmsten Fall ohne Konstanten. Zwei verschachtelte Schleifen bis n ergeben O(n²).",
+     "Bubble, Selection und Insertion Sort sind O(n²), Arrays.sort ist O(n log n).",
+     "Verkettete Liste: vorne einfügen O(1), Indexzugriff O(n). Array-basierte Liste: Indexzugriff O(1).",
+     "Stack ist LIFO (push, pop), Queue ist FIFO (offer, poll).",
+     "Suchbaum: links kleiner, rechts größer. Inorder (links, Knoten, rechts) liefert die sortierte Reihenfolge."
+   ],
    "quellen": [
     {
      "name": "Tutorium 4: Algorithmen und Datenstrukturen",
@@ -3167,6 +3207,14 @@ window.FAECHER.push({
    "titel": "Kapitel 5: Fortgeschrittenes – Exceptions, Threads, Dateien und Sockets",
    "abschnitt": "Vorlesung folgt (ca. Januar 2027), Tutoriumsmaterial liegt vor (Tutorium 5)",
    "seiten": "Tutorium 5 (Advanced Concepts) mit Musterlösung; Kick-off Folie 25 (Failure handling, Concurrency, Sockets and Streams); Altklausuren",
+   "kurz": [
+     "try { riskant } catch (Typ e) { behandeln } finally { läuft immer }. Nach dem Fehler entfällt der Rest des try.",
+     "Checked Exceptions (z. B. IOException) fangen oder mit throws ankündigen. Bei unchecked (RuntimeException) ist das keine Pflicht.",
+     "catch-Reihenfolge: speziell vor allgemein, sonst Compilerfehler wegen unerreichbarem catch.",
+     "Thread mit start() starten, nicht mit run(). join() wartet aufs Ende, die Reihenfolge ist nicht vorhersagbar.",
+     "counter++ ist nicht atomar (Race Condition). synchronized mit demselben Lock lässt nur einen Thread hinein.",
+     "Sockets: ServerSocket(port).accept() wartet auf Clients, new Socket(host, port) verbindet."
+   ],
    "quellen": [
     {
      "name": "Tutorium 5: Advanced Concepts",

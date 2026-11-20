@@ -28,6 +28,14 @@ window.FAECHER.push({
       titel: "Woche 1–2: Plattformökonomie",
       abschnitt: "VL 15.10. und 22.10., Tutorium 1 am 29.10.2026",
       seiten: "Part A (Introduction) und Part B (Platform Economy)",
+      kurz: [
+        "Pipeline erstellt den Wert selbst entlang einer Kette. Platform bringt Anbieter und Konsumenten zusammen und koordiniert.",
+        "Network effects = demand-side economies of scale: Der Nutzen steigt, je mehr andere mitmachen. Das unterscheidet Plattform von Pipeline.",
+        "Platform types: Transaction platform (vermittelt, z. B. Booking.com), Innovation platform (Basis für fremde Produkte, z. B. AWS), Integrated platform (beides).",
+        "Airbnb Growth Formula $B = A \\cdot S^{\\gamma} \\cdot D^{\\alpha}$. Steigt das Angebot um x, gilt $B_{neu}/B = (1+x)^{\\gamma}$.",
+        "Multi-homing heißt, mehrere Plattformen gleichzeitig nutzen. Nicht mit switching costs verwechseln (eine Plattform verlassen, eine andere annehmen).",
+        "Platform leakage (Disintermediation): Nutzer wickeln am Ende ohne Plattform ab, um die Provision zu sparen."
+      ],
       quellen: [
         { name: "Vorlesung Part A: Introduction", pfad: "material/PE/Vorlesung/PE_Part_A_Introduction.pdf" },
         { name: "Vorlesung Part B: Platform Economy", pfad: "material/PE/Vorlesung/PE_Part_B_Platform_Economy.pdf" },
@@ -239,6 +247,14 @@ window.FAECHER.push({
       titel: "Woche 3: Netzwerkeffekte I",
       abschnitt: "VL 29.10., Tutorium 2 am 05.11.2026",
       seiten: "Part C, Folie 5–28 und 35–43",
+      kurz: [
+        "Network effect: Ein Produkt wird für jeden Nutzer wertvoller, je mehr Leute es nutzen.",
+        "Direct network effects: Wert durch direkte Interaktion (Telefon). Indirect: mehr Nutzer bringen mehr Komplemente (Standards).",
+        "Im Netzwerkmarkt hängt die Zahlungsbereitschaft von der Nutzerzahl ab: $WTP_i = a_i \\cdot n$.",
+        "Demand-Demand-Funktion: Gleichgewichte L, C, H auf der 45°-Linie. L und H sind stabil, C ist instabil und die kritische Masse.",
+        "Folgen von network effects: kritische Masse, Winner-takes-all, Drift zum Monopol, Lock-in.",
+        "Bass Diffusion Model: neue Adopter $= (p + qF)(1-F)$. p wirkt von außen (Werbung), q über Imitation (Mundpropaganda)."
+      ],
       quellen: [
         { name: "Vorlesung Part C: Network Effects", pfad: "material/PE/Vorlesung/PE_Part_C_Network_Effects.pdf" },
         { name: "Tutorial 2: Aufgaben", pfad: "material/PE/Tutorien/PE_Tutorial_2.pdf" },
@@ -418,6 +434,14 @@ window.FAECHER.push({
       titel: "Woche 4: Netzwerkeffekte II, zweiseitige Märkte",
       abschnitt: "Tutorium 3 am 12.11.2026",
       seiten: "Part C, Folie 13–16 und 29–34",
+      kurz: [
+        "Metcalfe: Wert = Zahl der Verbindungen $n(n-1)/2 \\propto n^2$. Sarnoff: $V = n$. Reed: $V = 2^n - n - 1$.",
+        "Realistisch: $n^2$ für kleine, $n \\ln n$ für große Netze, weil man nur mit einem begrenzten Kreis kommuniziert.",
+        "Cross-side (indirect) effects: mehr Anbieter machen die Plattform für Konsumenten wertvoller und umgekehrt. Same-side effects wirken innerhalb einer Seite.",
+        "Gleichgewicht im zweiseitigen Markt: Reaktionsfunktionen $b(s)$ und $s(b)$ ineinander einsetzen und lösen.",
+        "Pricing: beide Seiten gemeinsam optimieren (cross-subsidization). Eine Seite billiger machen, damit die andere mehr zahlt.",
+        "Häufiger Fehler: jede Seite einzeln optimieren oder einen Einheitspreis setzen. Beides bringt weniger Gesamterlös."
+      ],
       quellen: [
         { name: "Vorlesung Part C: Network Effects", pfad: "material/PE/Vorlesung/PE_Part_C_Network_Effects.pdf" },
         { name: "Tutorial 3: Aufgaben", pfad: "material/PE/Tutorien/PE_Tutorial_3.pdf" },
@@ -593,6 +617,14 @@ window.FAECHER.push({
       titel: "Woche 5: Trust and Reputation I",
       abschnitt: "VL 12.11.2026, Tutorium dazu am 03.12.2026",
       seiten: "Part D, Folie 1–34",
+      kurz: [
+        "Trust: die Bereitschaft, sich gegenüber einem anderen verletzlich zu machen, ohne ihn kontrollieren zu können.",
+        "Vertrauen ist die zentrale Voraussetzung für Online-Transaktionen zwischen Fremden.",
+        "Zwei Hebel: existing trust erhöhen (Reputationssysteme, Profile) oder required trust senken (Versicherungen, Garantien).",
+        "Trust/Discrimination-Tradeoff: Fotos und persönliche Infos schaffen Vertrauen, ermöglichen aber auch Diskriminierung.",
+        "Hedonic pricing model: den Preis in den Wert seiner Eigenschaften zerlegen (Lage, Größe, Reputation).",
+        "Ein Rating kann zu gut sein: $\\text{trust} \\sim v \\cdot C(v)$ ergibt ein umgekehrtes U über die Rating-Valenz."
+      ],
       quellen: [
         { name: "Vorlesung Part D: Trust and Reputation Systems I", pfad: "material/PE/Vorlesung/PE_Part_D_Trust_Reputation_I.pdf" }
       ],
@@ -699,6 +731,13 @@ window.FAECHER.push({
       titel: "Woche 6: Trust and Reputation II (Fake Reviews, Review Inflation)",
       abschnitt: "VL 19.11.2026, Tutorium dazu am 03.12.2026",
       seiten: "Part D II, Folie 1–32",
+      kurz: [
+        "Reputation hat ökonomischen Wert. Darum gibt es Sekundärmärkte für Online-Reputation (gekaufte Follower, Sterne, Bewertungen).",
+        "Fake Reviews geben keine echte Erfahrung wieder. Formen: positive über sich, competitive downrating, suppression eigener Kritik.",
+        "Erkennung über Muster: Bewerter-Paare mit vielen gemeinsamen Produkten und dichte Gruppen (Bewertungs-Ringe).",
+        "Review Inflation: Durchschnittsbewertungen steigen über die Jahre und unterscheiden kaum noch zwischen gut und schlecht.",
+        "Ursache der Inflation: Schlechte Bewertungen kosten den Bewertenden etwas, und die Norm verschiebt sich nach oben."
+      ],
       quellen: [
         { name: "Vorlesung Part D II: Trust and Reputation Systems", pfad: "material/PE/Vorlesung/PE_Part_D2_Trust_Reputation_II.pdf" }
       ],
