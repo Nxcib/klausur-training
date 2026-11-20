@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klausur-Training</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1d1f24; --muted:#6a6f78; --line:#e3e1da;
+  --accent:#2f5d8a; --accent-soft:#e6eef6; --good:#2e7d4f; --good-soft:#e5f3ea;
+  --bad:#b4442f; --bad-soft:#f8e7e3; --warn:#9a6a12;
+  --radius:12px; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.04);
+  --code-bg:#f3f2ee;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#15171b; --panel:#1e2127; --ink:#e8e9ec; --muted:#9aa0aa; --line:#2e323a;
+    --accent:#7fb0e0; --accent-soft:#22303f; --good:#6cc191; --good-soft:#1d3226;
+    --bad:#e98a76; --bad-soft:#3a2420; --warn:#e2b45a; --shadow:none; --code-bg:#181a1f;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:900px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:16px}
+h1{font-size:20px;margin:0}
+select{font:inherit;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.countdown{font-size:14px;color:var(--muted)}
+.countdown b{color:var(--ink)}
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+nav.tabs button{background:none;border:0;padding:10px 14px;border-bottom:2px solid transparent;color:var(--muted);white-space:nowrap}
+nav.tabs button.on{color:var(--ink);border-color:var(--accent);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.chip{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:4px 12px;font-size:14px}
+.chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){.btn.primary{color:#111}}
+.btn.good{border-color:var(--good);color:var(--good)}
+.btn.bad{border-color:var(--bad);color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:default}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.stat{font-size:28px;font-weight:600}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--accent)}
+/* Karteikarten */
+.flash{min-height:220px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.flash .q{font-size:19px;font-weight:600}
+.flash .a{border-top:1px dashed var(--line);padding-top:14px}
+.meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:10px}
+.boxes{display:flex;gap:6px;margin-top:10px}
+.boxes div{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.boxes div b{display:block;font-size:18px;color:var(--ink)}
+/* Quiz */
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{background:var(--good-soft);border-color:var(--good)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+input.num{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:160px;background:var(--panel);color:var(--ink)}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:8px}
+.feedback.ok{background:var(--good-soft)}
+.feedback.no{background:var(--bad-soft)}
+.progress{height:4px;background:var(--line);border-radius:2px;margin-bottom:14px}
+.progress>i{display:block;height:100%;background:var(--accent);border-radius:2px}
+/* Formeln */
+.formel{margin-bottom:12px}
+.formel h3{margin:0 0 8px;font-size:16px}
+.formel .tex{overflow-x:auto;padding:8px 0;font-size:17px}
+.formel .bsp{font-size:14px;margin-top:6px}
+.kapitel-h{font-size:15px;margin:22px 0 10px;color:var(--muted);font-weight:600}
+.src{font-size:12px;color:var(--muted)}
+/* Lernblatt */
+.blatt{margin-bottom:22px}
+.blatt h2{font-size:19px;margin:0 0 4px}
+.blatt h3{font-size:15px;margin:18px 0 8px}
+.blatt ul{margin:0;padding-left:20px}
+.blatt li{margin:5px 0}
+.quellen{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.quellen a,.quellen span{font-size:13px;border:1px solid var(--line);border-radius:6px;padding:3px 9px;color:var(--accent);text-decoration:none;background:var(--panel)}
+.quellen span{color:var(--muted)}
+details.aufgabe{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;background:var(--panel)}
+details.aufgabe summary{cursor:pointer;font-weight:600}
+details.aufgabe .txt{margin:8px 0}
+details.aufgabe ol{margin:8px 0 0;padding-left:20px}
+details.aufgabe li{margin:6px 0}
+.loesbtn{margin-top:6px}
+.hidden{display:none}
+/* Code (Prog 1) */
+pre.code{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;font:14px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;margin:8px 0;white-space:pre}
+pre.code.out{background:var(--good-soft)}
+.lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-top:8px}
+input.txt{font:14px ui-monospace,Menlo,monospace;padding:8px 10px;border:1px solid var(--line);border-radius:8px;width:min(100%,420px);background:var(--panel);color:var(--ink)}
+.lektion{border-left:3px solid var(--accent);padding:4px 0 4px 14px;margin:14px 0}
+.lektion h4{margin:0 0 6px;font-size:16px}
+.lektion p{margin:6px 0}
+.merke{background:var(--accent-soft);border-radius:8px;padding:8px 12px;margin-top:8px;font-size:15px}
+.hinweis{margin-bottom:16px}
+.hinweis ol{margin:6px 0 0;padding-left:20px}
+.hinweis li{margin:4px 0}
+/* Mündlich */
+.punkt{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--line)}
+.punkt input{margin-top:4px;width:18px;height:18px}
+.uhr{font-variant-numeric:tabular-nums;font-size:22px;font-weight:600}
+.btn.erledigt{margin-top:10px;font-size:14px;padding:6px 12px}
+.btn.erledigt.ist{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Training (Nachverfolgen, Code-Puzzle, Auf Papier) */
+.tliste{display:flex;flex-direction:column}
+.tzeile{display:flex;gap:10px;align-items:center;justify-content:space-between;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:10px 2px}
+.tzeile:hover{background:var(--accent-soft)}
+.badge{font-size:12px;border-radius:999px;padding:2px 9px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.badge.trace{border-color:#5b8bb8;color:#3d6d99}
+.badge.parsons{border-color:#8a6fb5;color:#6c509a}
+.badge.papier{border-color:#b08440;color:#8b6420}
+@media (prefers-color-scheme: dark){.badge.trace{color:#8fbbe6}.badge.parsons{color:#bca5e6}.badge.papier{color:#e2b45a}}
+.tstatus{font-size:13px;white-space:nowrap}
+.tstatus.ok{color:var(--good)}
+.tabelle-wrap{overflow-x:auto;margin:10px 0}
+table.trace{border-collapse:collapse;font:14px ui-monospace,Menlo,monospace}
+table.trace th,table.trace td{border:1px solid var(--line);padding:4px 6px;text-align:left}
+table.trace th{background:var(--code-bg);font-weight:600}
+table.trace input{font:inherit;width:9.5em;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink)}
+table.trace td.fest{color:var(--muted)}
+table.trace td.r input{background:var(--good-soft);border-color:var(--good)}
+table.trace td.f input{background:var(--bad-soft);border-color:var(--bad)}
+.soll{display:block;font-size:12px;color:var(--bad);margin-top:2px}
+textarea.aus{font:14px ui-monospace,Menlo,monospace;width:min(100%,420px);min-height:80px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
+textarea.aus.r{background:var(--good-soft);border-color:var(--good)}
+textarea.aus.f{background:var(--bad-soft);border-color:var(--bad)}
+.pz{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pz>div{min-width:0}
+@media (max-width:700px){.pz{grid-template-columns:1fr}}
+.pzbox{border:1px dashed var(--line);border-radius:8px;padding:8px;min-height:120px;background:var(--code-bg)}
+.pzline{display:block;width:100%;text-align:left;font:14px/1.4 ui-monospace,Menlo,monospace;white-space:pre;overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 8px;margin:4px 0}
+.pzline:hover{border-color:var(--accent)}
+.pzline.f{background:var(--bad-soft);border-color:var(--bad)}
+.pzline.r{background:var(--good-soft);border-color:var(--good)}
+.lernweg{background:var(--accent-soft);border-radius:8px;padding:10px 14px;margin:12px 0}
+.lernweg ol{margin:6px 0 0;padding-left:20px}
+.lernweg li{margin:4px 0}
+.lernweg .weiter{font-size:13px;margin-left:6px}
+.check{display:inline-block;width:1.2em;color:var(--good);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="row">
+      <h1>Klausur-Training</h1>
+      <select id="fach" aria-label="Fach"></select>
+    </div>
+    <div class="countdown" id="countdown"></div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button data-tab="uebersicht" class="on">Übersicht</button>
+    <button data-tab="lernblatt">Lernblatt</button>
+    <button data-tab="training">Training</button>
+    <button data-tab="karten">Karteikarten</button>
+    <button data-tab="quiz">Quiz</button>
+    <button data-tab="formeln">Formeln</button>
+    <button data-tab="muendlich">Mündlich</button>
+  </nav>
+
+  <div class="chips" id="chips"></div>
+  <main id="view"></main>
+</div>
+
+<!-- Fachdaten: pro Fach eine Datei in daten/ -->
+<script src="daten/iuf.js"></script>
+<script src="daten/pe.js"></script>
+<script src="daten/prog1.js"></script>
+<script src="daten/c2c.js"></script>
+<script src="daten/tgi.js"></script>
+<script src="daten/prog1_training.js"></script>
+
+<script>
+(() => {
+  // ---------- Speicher (lokal im Browser, darf fehlschlagen) ----------
+  // Lernstand-Felder pro Fach: werden online zusätzlich im claude.ai-Konto gespeichert (siehe Konto-Sync unten)
+  const LERNFELDER = ["karten", "quiz", "fehler", "muendlich", "lektionen", "training"];
+  const lernKey = k => { const m = /^([a-z]+):(.+)$/.exec(k); return m && LERNFELDER.includes(m[1]) ? m[2] : null; };
+  const store = {
+    get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+    setLokal(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    set(k, v){
+      store.setLokal(k, v);
+      const f = lernKey(k);
+      if (f) { store.setLokal("stand-am:" + f, Date.now()); sync.merke(f); }
+    }
+  };
+
+  // ---------- Konto-Sync (nur in der Online-Version auf claude.ai) ----------
+  // Ein Dokument pro Fach unter data/users/<id>/<fach>. Neuerer Stand gewinnt (Zeitstempel "am").
+  // Ohne Anmeldung oder ohne Schreibrecht bleibt alles nur im Browser.
+  const sync = {
+    col: null, status: "browser", offen: new Set(), timer: null, laeuft: false,
+    merke(f){ if (!this.col) return; this.offen.add(f); clearTimeout(this.timer); this.timer = setTimeout(() => this.schreibe(), 1500); },
+    paket(f){ const p = { am: store.get("stand-am:" + f, 0) }; for (const feld of LERNFELDER) p[feld] = store.get(feld + ":" + f, null); return p; },
+    async schreibe(){
+      if (this.laeuft || !this.col) return;
+      this.laeuft = true;
+      try {
+        for (const f of [...this.offen]) { this.offen.delete(f); await this.col.doc(f).set(this.paket(f)); }
+        this.status = "konto";
+      } catch (e) {
+        this.status = "browser"; this.col = null; // z. B. nur Leserechte: dann bleibt es beim Browser
+      }
+      this.laeuft = false;
+      if (this.offen.size) this.schreibe();
+    },
+    async start(){
+      if (!window.claude || !window.claude.use) return;
+      try {
+        const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+        if (!db || !user) return;
+        const id = await user.id();
+        if (!id || (await user.can("data.write")) === false) return; // nur Leserechte: Browser-Speicher
+        this.col = db.collection("data/users/" + id);
+        this.status = "laedt"; render();
+        const zeit = new Promise((_, nein) => setTimeout(() => nein(new Error("timeout")), 10000));
+        for (const f of FAECHER.map(x => x.id)) {
+          const snap = await Promise.race([this.col.doc(f).get(), zeit]);
+          const lokalAm = store.get("stand-am:" + f, 0);
+          const d = snap.exists ? snap.data() : null;
+          if (d && (d.am || 0) > lokalAm) {
+            for (const feld of LERNFELDER) if (d[feld] != null) store.setLokal(feld + ":" + f, d[feld]);
+            store.setLokal("stand-am:" + f, d.am);
+          } else if (lokalAm && (!d || lokalAm > (d.am || 0))) this.offen.add(f);
+        }
+        this.status = "konto";
+        if (this.offen.size) await this.schreibe();
+      } catch (e) {
+        this.status = "browser"; this.col = null;
+      }
+      reset(); render();
+    }
+  };
+
+  const FAECHER = window.FAECHER || [];
+  // Fehlende Listen auffüllen, damit jedes Fach nur die Teile braucht, die es hat
+  for (const f of FAECHER) for (const k of f.kapitel)
+    for (const feld of ["karten","quiz","formeln","aufgaben","zusammenfassung","lektionen","pruefungsfragen","quellen"]) k[feld] = k[feld] || [];
+  // Training-Übungen kommen aus einer eigenen Datei (z. B. daten/prog1_training.js) und werden hier an die Kapitel gehängt
+  for (const f of FAECHER) {
+    const t = (window.TRAINING || {})[f.id] || {};
+    f.projekt = t.projekt || {};
+    for (const k of f.kapitel) k.training = (t.kapitel || {})[k.id] || [];
+  }
+  const state = {
+    fach: store.get("fach", FAECHER[0] && FAECHER[0].id),
+    tab: store.get("tab", "uebersicht"),
+    filter: null // Set von Kapitel-IDs, null = alle
+  };
+  if (!FAECHER.find(f => f.id === state.fach) && FAECHER[0]) state.fach = FAECHER[0].id;
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const fach = () => FAECHER.find(f => f.id === state.fach);
+  const aktiveKapitel = () => fach().kapitel.filter(k => !state.filter || state.filter.has(k.id));
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const math = el => { if (window.renderMathInElement) renderMathInElement(el, { delimiters: [{left:"$", right:"$", display:false}], throwOnError:false }); };
+  const quelle = x => x.q ? x.q : "Skript S. " + x.s;
+  const pfadUrl = p => p.split("/").map(encodeURIComponent).join("/");
+  const tex = (el, t) => { if (window.katex) katex.render(t, el, { throwOnError:false, displayMode:true }); else el.textContent = t; };
+  const codeBlock = (c, cls = "") => c ? `<pre class="code ${cls}">${esc(c)}</pre>` : "";
+  const hat = feld => fach().kapitel.some(k => k[feld].length);
+  // Textantworten vergleichen: Groß/klein, Leerzeichen und Zeilenumbrüche egal
+  const norm = s => String(s).toLowerCase().replace(/[„“"']/g, "").replace(/\s+/g, " ").trim();
+
+  // ---------- Leitner-System ----------
+  // Box 0 = neu. Richtig: eine Box höher. Falsch: zurück in Box 1.
+  const INTERVALL = [0, 1, 2, 4, 8, 16]; // Tage bis zur nächsten Wiederholung je Box
+  const TAG = 86400000;
+  const kartenKey = () => "karten:" + state.fach;
+  const kartenStand = () => store.get(kartenKey(), {});
+  const kartenId = (k, i) => k.id + ":" + i;
+  function alleKarten(){
+    const stand = kartenStand();
+    return aktiveKapitel().flatMap(k => k.karten.map((c, i) => {
+      const id = kartenId(k, i), s = stand[id] || { box: 0, faellig: 0 };
+      return { ...c, id, kapitel: k, box: s.box, faellig: s.faellig };
+    }));
+  }
+  function bewerte(id, gewusst){
+    const stand = kartenStand();
+    const s = stand[id] || { box: 0, faellig: 0 };
+    s.box = gewusst ? Math.min(5, s.box + 1) : 1;
+    s.faellig = Date.now() + INTERVALL[s.box] * TAG;
+    stand[id] = s;
+    store.set(kartenKey(), stand);
+  }
+
+  // ---------- Kopf ----------
+  function renderKopf(){
+    $("#fach").innerHTML = FAECHER.map(f => `<option value="${f.id}" ${f.id === state.fach ? "selected" : ""}>${esc(f.name)}</option>`).join("");
+    const k = fach().klausur;
+    if (k) {
+      const tage = Math.ceil((new Date(k.datum) - new Date()) / TAG);
+      $("#countdown").innerHTML = tage >= 0 ? `Klausur in <b>${tage} Tagen</b> · ${esc(k.text)}` : `Klausur war am ${esc(k.text)}`;
+    }
+    $("#chips").innerHTML = `<button class="chip ${!state.filter ? "on" : ""}" data-k="alle">Alle</button>` +
+      fach().kapitel.map(k => `<button class="chip ${state.filter && state.filter.has(k.id) ? "on" : ""}" data-k="${k.id}">${esc(k.titel)}</button>`).join("");
+    // Reiter nur zeigen, wenn das Fach Inhalte dafür hat
+    const sichtbar = { formeln: hat("formeln"), muendlich: hat("pruefungsfragen"), quiz: hat("quiz"), karten: hat("karten"), training: hat("training") };
+    if (sichtbar[state.tab] === false) state.tab = "uebersicht";
+    document.querySelectorAll("#tabs button").forEach(b => {
+      b.classList.toggle("on", b.dataset.tab === state.tab);
+      b.classList.toggle("hidden", sichtbar[b.dataset.tab] === false);
+      if (b.dataset.tab === "formeln") b.textContent = fach().formelnTitel || "Formeln";
+    });
+  }
+
+  // ---------- Lektionen erledigt ----------
+  const lektionStand = () => store.get("lektionen:" + state.fach, {});
+  function lektionUmschalten(id){
+    const st = lektionStand();
+    st[id] ? delete st[id] : (st[id] = Date.now());
+    store.set("lektionen:" + state.fach, st);
+    return !!st[id];
+  }
+
+  // ---------- Übersicht ----------
+  function renderUebersicht(v){
+    const stand = kartenStand();
+    const quiz = store.get("quiz:" + state.fach, {});
+    const jetzt = Date.now();
+    const karten = alleKarten();
+    const faellig = karten.filter(c => c.faellig <= jetzt).length;
+    const mstand = store.get("muendlich:" + state.fach, {});
+    const lstand = lektionStand();
+    const lGesamt = aktiveKapitel().reduce((s, k) => s + k.lektionen.length, 0);
+    const lErledigt = aktiveKapitel().reduce((s, k) => s + k.lektionen.filter((l, i) => lstand[k.id + ":" + i]).length, 0);
+    const speicherText = { konto: "Lernstand wird in deinem claude.ai-Konto gespeichert und ist auf allen deinen Geräten gleich.",
+      laedt: "Lernstand wird aus deinem Konto geladen …",
+      browser: "Lernstand wird in diesem Browser auf diesem Gerät gespeichert. Er bleibt, solange du die Browserdaten nicht löschst." }[sync.status];
+    v.innerHTML = `
+      ${fach().anleitung ? `<div class="card hinweis"><b>So lernst du hier</b><ol>${fach().anleitung.map(a => `<li>${esc(a)}</li>`).join("")}</ol></div>` : ""}
+      <div class="grid" style="margin-bottom:16px">
+        <div class="card"><div class="muted small">Lektionen erledigt</div><div class="stat">${lErledigt} / ${lGesamt}</div>
+          <button class="btn" style="margin-top:8px" data-go="lernblatt">Weiterlesen</button></div>
+        ${hat("training") ? `<div class="card"><div class="muted small">Training geschafft</div><div class="stat">${tGeschafft(aktiveKapitel())} / ${aktiveKapitel().reduce((s, k) => s + k.training.length, 0)}</div>
+          <button class="btn primary" style="margin-top:8px" data-tnext="1">Nächste offene Übung</button></div>` : ""}
+        <div class="card"><div class="muted small">Heute fällige Karten</div><div class="stat">${faellig}</div>
+          <button class="btn primary" style="margin-top:8px" data-go="karten">Jetzt lernen</button></div>
+        <div class="card"><div class="muted small">Karten sicher (Box 4 bis 5)</div><div class="stat">${karten.filter(c => c.box >= 4).length} / ${karten.length}</div></div>
+      </div>
+      <p class="small muted" id="speicher">${esc(speicherText)} Quelle der Inhalte: ${esc(fach().quelle)}</p>
+      <div class="card">
+        ${aktiveKapitel().map(k => {
+          const n = k.karten.length;
+          const sicher = k.karten.filter((c, i) => (stand[kartenId(k, i)] || {}).box >= 4).length;
+          const q = quiz[k.id];
+          const teile = [k.lektionen.length && `${k.lektionen.length} Lektionen`, n && `${n} Karten`, k.quiz.length && `${k.quiz.length} Fragen`,
+            k.formeln.length && `${k.formeln.length} ${fach().formelnTitel || "Formeln"}`, k.pruefungsfragen.length && `${k.pruefungsfragen.length} Prüfungsfragen`].filter(Boolean);
+          const mf = k.pruefungsfragen.map((p, i) => mstand[k.id + ":" + i]).filter(Boolean);
+          const mtext = k.pruefungsfragen.length ? (mf.length ? `Mündlich geübt: ${mf.length}/${k.pruefungsfragen.length}, Ø ${Math.round(mf.reduce((s, x) => s + x.letzt, 0) / mf.length)} %` : "Mündlich noch nicht geübt") : "";
+          return `<div style="padding:10px 0;border-bottom:1px solid var(--line)">
+            <div class="row" style="justify-content:space-between">
+              <div><b>${esc(k.titel)}</b> <span class="muted small">${esc(k.abschnitt)}, ${esc(k.seiten)}</span></div>
+              <div class="small muted">${teile.join(" · ")}</div>
+            </div>
+            <div class="row small muted" style="justify-content:space-between;margin-top:4px">
+              <span>${[k.lektionen.length && `Lektionen: ${k.lektionen.filter((l, i) => lstand[k.id + ":" + i]).length}/${k.lektionen.length}`, k.training.length && `Training: ${tGeschafft([k])}/${k.training.length}`, n && `Karten sicher: ${sicher}/${n}`].filter(Boolean).join(" · ")}</span>
+              <span>${k.quiz.length ? (q ? `Quiz zuletzt: ${q.letzt} %, bestes: ${q.best} %` : "Quiz noch nicht gemacht") : mtext}</span>
+            </div>
+            <div class="bar"><i style="width:${n ? Math.round(sicher / n * 100) : 0}%"></i></div>
+          </div>`;
+        }).join("")}
+      </div>`;
+  }
+
+  // ---------- Karteikarten ----------
+  let kartenSitzung = null;
+  function neueKartenSitzung(alle){
+    const jetzt = Date.now();
+    let liste = alleKarten();
+    if (!alle) liste = liste.filter(c => c.faellig <= jetzt);
+    liste = shuffle(liste).sort((a, b) => a.box - b.box);
+    kartenSitzung = { liste, pos: 0, offen: false, richtig: 0 };
+  }
+  function renderKarten(v){
+    if (!kartenSitzung) neueKartenSitzung(false);
+    const s = kartenSitzung;
+    const karten = alleKarten();
+    const boxen = [0,1,2,3,4,5].map(b => karten.filter(c => c.box === b).length);
+    const boxLeiste = `<div class="boxes">${["Neu","Box 1","Box 2","Box 3","Box 4","Box 5"].map((n, i) => `<div><b>${boxen[i]}</b>${n}</div>`).join("")}</div>`;
+
+    if (s.pos >= s.liste.length) {
+      v.innerHTML = `<div class="card flash" style="text-align:center">
+        <div class="q">${s.liste.length ? `Fertig: ${s.richtig} von ${s.liste.length} gewusst.` : "Heute ist nichts fällig."}</div>
+        <div class="row" style="justify-content:center">
+          <button class="btn primary" data-act="alle">Alle Karten durchgehen</button>
+          <button class="btn" data-act="faellig">Nur fällige</button>
+        </div>
+        ${boxLeiste}
+      </div>`;
+      return;
+    }
+    const c = s.liste[s.pos];
+    v.innerHTML = `<div class="card">
+      <div class="meta"><span>${esc(c.kapitel.titel)} · ${c.box ? "Box " + c.box : "neu"}</span><span>${s.pos + 1} / ${s.liste.length}</span></div>
+      <div class="flash">
+        <div class="q">${esc(c.f)}</div>
+        ${codeBlock(c.code)}
+        ${s.offen
+          ? `<div class="a">${esc(c.a)}${codeBlock(c.acode)}<div class="src" style="margin-top:8px">${esc(quelle(c))}</div></div>
+             <div class="row"><button class="btn bad" data-act="nein">Nicht gewusst</button><button class="btn good" data-act="ja">Gewusst</button></div>`
+          : `<div><button class="btn primary" data-act="zeigen">Antwort zeigen</button> <span class="muted small">(Leertaste)</span></div>`}
+      </div>
+      ${boxLeiste}
+    </div>`;
+    math(v);
+  }
+  function kartenAktion(act){
+    const s = kartenSitzung;
+    if (act === "zeigen") s.offen = true;
+    else if (act === "ja" || act === "nein") {
+      bewerte(s.liste[s.pos].id, act === "ja");
+      if (act === "ja") s.richtig++;
+      s.pos++; s.offen = false;
+    }
+    else if (act === "alle") neueKartenSitzung(true);
+    else if (act === "faellig") neueKartenSitzung(false);
+    render();
+  }
+
+  // ---------- Quiz ----------
+  let quizSitzung = null;
+  function neuesQuiz(nurFehler){
+    let fragen = aktiveKapitel().flatMap(k => k.quiz.map((q, i) => ({ ...q, id: k.id + ":" + i, kapitel: k })));
+    if (nurFehler) {
+      const fehler = new Set(store.get("fehler:" + state.fach, []));
+      fragen = fragen.filter(q => fehler.has(q.id));
+    }
+    quizSitzung = { fragen: shuffle(fragen), pos: 0, antwort: null, punkte: 0, proKapitel: {} };
+  }
+  function pruefe(q, eingabe){
+    if (q.typ === "mc") return eingabe === q.richtig;
+    if (q.typ === "text") return [].concat(q.loesung).some(l => norm(l) === norm(eingabe));
+    const x = parseFloat(String(eingabe).replace(/\s/g, "").replace(/\./g, "").replace(",", "."));
+    const y = parseFloat(String(eingabe).replace(",", "."));
+    // "3814,48" und "3814.48" und "3.814,48" erlauben
+    const kandidaten = [x, y].filter(n => !isNaN(n));
+    return kandidaten.some(n => Math.abs(n - q.loesung) <= q.toleranz + 1e-9);
+  }
+  const zahlText = n => n.toLocaleString("de-DE", { maximumFractionDigits: 4 });
+  function renderQuiz(v){
+    if (!quizSitzung) neuesQuiz(false);
+    const s = quizSitzung;
+    const fehlerAnzahl = store.get("fehler:" + state.fach, []).length;
+    if (s.pos >= s.fragen.length) {
+      const pct = s.fragen.length ? Math.round(s.punkte / s.fragen.length * 100) : 0;
+      v.innerHTML = `<div class="card" style="text-align:center">
+        <div class="flash">
+          <div class="q">${s.fragen.length ? `${s.punkte} von ${s.fragen.length} richtig (${pct} %)` : "Keine Fragen in dieser Auswahl."}</div>
+          <div class="row" style="justify-content:center">
+            <button class="btn primary" data-act="neu">Neues Quiz</button>
+            <button class="btn" data-act="fehler" ${fehlerAnzahl ? "" : "disabled"}>Fehler wiederholen (${fehlerAnzahl})</button>
+          </div>
+        </div></div>`;
+      return;
+    }
+    const q = s.fragen[s.pos];
+    const beantwortet = s.antwort !== null;
+    const ok = beantwortet && pruefe(q, s.antwort);
+    let body;
+    if (q.typ === "mc") {
+      body = q.optionen.map((o, i) => {
+        let cls = "opt";
+        if (beantwortet && i === q.richtig) cls += " right";
+        else if (beantwortet && i === s.antwort) cls += " wrong";
+        return `<button class="${cls}" data-opt="${i}" ${beantwortet ? "disabled" : ""}>${esc(o)}</button>`;
+      }).join("");
+    } else if (q.typ === "text") {
+      body = `<form class="row" id="zahlform">
+        <input class="txt" id="zahl" autocomplete="off" spellcheck="false" placeholder="${esc(q.platzhalter || "Antwort eintippen")}" ${beantwortet ? `value="${esc(s.antwort)}" disabled` : ""}>
+        ${beantwortet ? "" : `<button class="btn primary" type="submit">Prüfen</button>`}
+      </form>`;
+    } else {
+      body = `<form class="row" id="zahlform">
+        <input class="num" id="zahl" inputmode="decimal" autocomplete="off" placeholder="Ergebnis" ${beantwortet ? `value="${esc(s.antwort)}" disabled` : ""}>
+        <span class="muted">${esc(q.einheit || "")}</span>
+        ${beantwortet ? "" : `<button class="btn primary" type="submit">Prüfen</button>`}
+      </form>`;
+    }
+    v.innerHTML = `<div class="card">
+      <div class="progress"><i style="width:${s.pos / s.fragen.length * 100}%"></i></div>
+      <div class="meta"><span>${esc(q.kapitel.titel)} · ${q.typ === "mc" ? (q.optionen.length === 2 && q.optionen[0] === "True" ? "True/False" : "Multiple Choice") : q.typ === "text" ? "Antwort eintippen" : "Rechenaufgabe"}</span><span>${s.pos + 1} / ${s.fragen.length}</span></div>
+      <div class="q" style="font-size:18px;font-weight:600;margin-bottom:12px">${esc(q.frage)}</div>
+      ${codeBlock(q.code)}
+      ${body}
+      ${beantwortet ? `<div class="feedback ${ok ? "ok" : "no"}">
+          <b>${ok ? "Richtig." : "Leider falsch."}</b>
+          ${q.typ === "zahl" ? ` Lösung: ${zahlText(q.loesung)} ${esc(q.einheit || "")}` : ""}
+          ${q.typ === "text" ? `<div class="lbl">Richtige Antwort</div>${codeBlock([].concat(q.loesung)[0], "out")}` : ""}
+          <div style="margin-top:6px">${esc(q.erklaerung)}</div>
+          ${codeBlock(q.erklaerungCode)}
+          <div class="src" style="margin-top:6px">${esc(quelle(q))}</div>
+        </div>
+        <div style="margin-top:14px"><button class="btn primary" data-act="weiter">Weiter (Enter)</button></div>` : ""}
+    </div>`;
+    math(v);
+    const inp = $("#zahl"); if (inp && !beantwortet) inp.focus();
+  }
+  function quizAntwort(a){
+    const s = quizSitzung, q = s.fragen[s.pos];
+    if (s.antwort !== null) return;
+    if (q.typ !== "mc" && String(a).trim() === "") return;
+    s.antwort = a;
+    const ok = pruefe(q, a);
+    if (ok) s.punkte++;
+    const pk = s.proKapitel[q.kapitel.id] || (s.proKapitel[q.kapitel.id] = { r: 0, n: 0 });
+    pk.n++; if (ok) pk.r++;
+    const fehler = new Set(store.get("fehler:" + state.fach, []));
+    ok ? fehler.delete(q.id) : fehler.add(q.id);
+    store.set("fehler:" + state.fach, [...fehler]);
+    render();
+  }
+  function quizWeiter(){
+    const s = quizSitzung;
+    s.pos++; s.antwort = null;
+    if (s.pos >= s.fragen.length) {
+      const quiz = store.get("quiz:" + state.fach, {});
+      for (const [k, v] of Object.entries(s.proKapitel)) {
+        const p = Math.round(v.r / v.n * 100);
+        quiz[k] = { letzt: p, best: Math.max(p, (quiz[k] || {}).best || 0) };
+      }
+      store.set("quiz:" + state.fach, quiz);
+    }
+    render();
+  }
+
+  // ---------- Lernblatt (pro Woche) ----------
+  function renderLernblatt(v){
+    const lstand = lektionStand();
+    v.innerHTML = aktiveKapitel().map(k => `<div class="card blatt">
+      <h2>${esc(k.titel)}</h2>
+      <div class="muted small">${esc(k.abschnitt)} · ${esc(k.seiten)}</div>
+      ${k.quellen.length ? `<div class="quellen">${k.quellen.map(s => s.pfad && !window.OHNE_PDF
+          ? `<a href="${pfadUrl(s.pfad)}" target="_blank" rel="noopener">${esc(s.name)}</a>`
+          : `<span>${esc(s.name)}</span>`).join("")}</div>` : ""}
+      ${k.training.length ? lernweg(k, lstand) : ""}
+      ${k.lektionen.length ? `<h3>Schritt für Schritt</h3>` + k.lektionen.map((l, i) => `<div class="lektion">
+          <h4>${i + 1}. ${esc(l.titel)}</h4>
+          ${[].concat(l.text || []).map(p => `<p>${esc(p)}</p>`).join("")}
+          ${l.code ? `<div class="lbl">Beispiel</div>${codeBlock(l.code)}` : ""}
+          ${l.ausgabe ? `<div class="lbl">Ausgabe</div>${codeBlock(l.ausgabe, "out")}` : ""}
+          ${l.merke ? `<div class="merke"><b>Merke:</b> ${esc(l.merke)}</div>` : ""}
+          <button class="btn erledigt ${lstand[k.id + ":" + i] ? "ist" : ""}" data-lek="${k.id}:${i}" aria-pressed="${!!lstand[k.id + ":" + i]}">${lstand[k.id + ":" + i] ? "✓ Erledigt" : "Als erledigt markieren"}</button>
+        </div>`).join("") : ""}
+      ${k.zusammenfassung.length ? `<h3>Das Wichtigste</h3><ul>${k.zusammenfassung.map(z => `<li>${esc(z)}</li>`).join("")}</ul>` : ""}
+      ${k.aufgaben.length ? `<h3>${esc(fach().aufgabenTitel || "Aufgaben aus Tutorium, FHA und Altklausuren")}</h3>` +
+        k.aufgaben.map(a => `<details class="aufgabe">
+          <summary>${esc(a.titel)}</summary>
+          <div class="src">${esc(a.q || "")}</div>
+          <div class="txt">${esc(a.text)}</div>
+          ${codeBlock(a.code)}
+          <details><summary class="btn loesbtn">Lösung zeigen</summary><ol>${(a.loesung || []).map(l => `<li>${esc(l)}</li>`).join("")}</ol>${codeBlock(a.loesungCode)}</details>
+        </details>`).join("") : ""}
+      <div class="row" style="margin-top:16px">
+        ${k.karten.length ? `<button class="btn" data-go="karten">Karteikarten (${k.karten.length})</button>` : ""}
+        ${k.quiz.length ? `<button class="btn" data-go="quiz">Quiz (${k.quiz.length})</button>` : ""}
+        ${k.formeln.length ? `<button class="btn" data-go="formeln">${esc(fach().formelnTitel || "Formeln")} (${k.formeln.length})</button>` : ""}
+        ${k.pruefungsfragen.length ? `<button class="btn" data-go="muendlich">Mündlich üben (${k.pruefungsfragen.length})</button>` : ""}
+      </div>
+    </div>`).join("");
+    math(v);
+  }
+
+  // ---------- Training: Nachverfolgen, Code-Puzzle, Auf Papier ----------
+  // Übungen pro Kapitel in k.training (aus daten/<fach>_training.js). Lernstand unter "training:<fach>".
+  const TYPNAME = { trace: "Nachverfolgen", parsons: "Code-Puzzle", papier: "Auf Papier" };
+  const tKey = () => "training:" + state.fach;
+  const tStand = () => store.get(tKey(), {});
+  // Geschafft: Tabelle und Puzzle zu 100 %, Papier ab 70 % der Checkliste
+  const tOk = (u, st) => !!st && st.best >= (u.typ === "papier" ? 70 : 100);
+  function tGeschafft(kap){ const st = tStand(); return kap.reduce((s, k) => s + k.training.filter((u, i) => tOk(u, st[k.id + ":" + i])).length, 0); }
+  function tFinde(id){
+    const [kid, i] = String(id).split(":");
+    const k = fach().kapitel.find(x => x.id === kid);
+    return k && k.training[+i] ? { k, u: k.training[+i], id } : null;
+  }
+  function tSpeichere(id, pct){
+    const st = tStand();
+    st[id] = { letzt: pct, best: Math.max(pct, (st[id] || {}).best || 0), am: Date.now() };
+    store.set(tKey(), st);
+  }
+  let tAuf = null, tUhr = null; // tAuf = geöffnete Übung mit Bearbeitungsstand
+  function tOeffne(id){
+    const x = tFinde(id);
+    if (!x) { tAuf = null; return; }
+    tAuf = { id, phase: "start", eingaben: {}, geprueft: false };
+    if (x.u.typ === "parsons") {
+      tAuf.pool = shuffle([...x.u.zeilen.map(t => ({ t })), ...x.u.ablenker.map(a => ({ t: a.zeile, warum: a.warum }))]);
+      tAuf.antwort = [];
+    }
+  }
+  function tNaechste(){
+    const st = tStand();
+    for (const k of aktiveKapitel()) for (let i = 0; i < k.training.length; i++)
+      if (!tOk(k.training[i], st[k.id + ":" + i])) return k.id + ":" + i;
+    return null;
+  }
+  const absatz = t => esc(t).replace(/\n/g, "<br>");
+  const uhrText = t => Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0");
+  // Zellen: Groß/klein, Leerzeichen und Anführungszeichen egal; Kommazahlen auch mit Komma ("3,4" = "3.4").
+  // Bewusst streng: "3" und "3.0" sind NICHT gleich, denn int oder double ist oft genau der Lernpunkt.
+  const vgl = s => String(s).toLowerCase().replace(/[„“"']/g, "").replace(/\s+/g, "");
+  function zellenGleich(ein, soll){
+    if (vgl(ein) === vgl(soll)) return true;
+    const e = String(ein).trim().replace(",", ".");
+    return /^-?\d+\.\d+$/.test(e) && /^-?\d+\.\d+$/.test(soll) && parseFloat(e) === parseFloat(soll);
+  }
+  const ausgabeZeilen = s => String(s).split("\n").map(x => x.trim().replace(/\s+/g, " ").toLowerCase()).filter(x => x !== "").join("\n");
+  // Einrückung aus den geschweiften Klammern berechnen (die Puzzle-Zeilen kommen ohne Einrückung)
+  function einruecken(zeilen){
+    let t = 0;
+    return zeilen.map(z => { if (/^[})]/.test(z)) t = Math.max(0, t - 1); const r = "    ".repeat(t) + z; if (/\{$/.test(z)) t++; return r; });
+  }
+  const tVorgabe = u => u.zeilen.length >= 3 ? 1 : 0; // erste Tabellenzeile als Beispiel vorgeben
+
+  function lernweg(k, lstand){
+    const st = tStand(), q = store.get("quiz:" + state.fach, {})[k.id];
+    const zahl = typ => {
+      const l = k.training.map((u, i) => [u, i]).filter(([u]) => u.typ === typ);
+      return l.length ? `${l.filter(([u, i]) => tOk(u, st[k.id + ":" + i])).length}/${l.length}` : null;
+    };
+    const lek = k.lektionen.filter((l, i) => lstand[k.id + ":" + i]).length;
+    const proj = (fach().projekt || {})[k.id] || [];
+    const schritte = [
+      k.lektionen.length && `Lektionen unten lesen und jedes Beispiel in IntelliJ selbst abtippen <span class="muted">(${lek}/${k.lektionen.length} erledigt)</span>`,
+      zahl("trace") && `Training „Nachverfolgen“: Code im Kopf ausführen <span class="muted">(${zahl("trace")} geschafft)</span>`,
+      zahl("parsons") && `Training „Code-Puzzle“: Zeilen ordnen <span class="muted">(${zahl("parsons")} geschafft)</span>`,
+      proj.length && `Übungsprojekt in IntelliJ, Ordner ${esc(k.id)}: ${proj.map(esc).join(", ")}. Erst selbst lösen, dann mit loesungen/ vergleichen`,
+      zahl("papier") && `Training „Auf Papier“ mit Uhr, wie in der Klausur <span class="muted">(${zahl("papier")} geschafft)</span>`,
+      k.quiz.length && `Quiz des Kapitels, Ziel 80 % <span class="muted">(${q ? "zuletzt " + q.letzt + " %" : "noch nicht gemacht"})</span>`,
+      k.karten.length && `Ab dann täglich 10 Minuten fällige Karteikarten`
+    ].filter(Boolean);
+    return `<div class="lernweg"><b>Dein Weg durch dieses Kapitel</b><ol>${schritte.map(s => `<li>${s}</li>`).join("")}</ol>
+      <div class="row" style="margin-top:8px"><button class="btn" data-go="training">Zum Training</button>${k.quiz.length ? `<button class="btn" data-go="quiz">Zum Quiz</button>` : ""}</div></div>`;
+  }
+
+  function renderTListe(v){
+    const st = tStand();
+    const kap = aktiveKapitel().filter(k => k.training.length);
+    v.innerHTML = `<div class="card hinweis"><b>So übst du hier</b><ol>
+        <li><b>Nachverfolgen:</b> Du spielst Computer. Geh den Code Zeile für Zeile durch und trag die Werte ein. Wer Code nicht im Kopf ausführen kann, kann ihn auch nicht schreiben. Darum kommt das zuerst.</li>
+        <li><b>Code-Puzzle:</b> Die richtigen Zeilen sind da, nur gemischt, und ein oder zwei gehören nicht hinein. So lernst du den Aufbau, bevor du alles selbst schreibst. Die Einrückung macht die Seite.</li>
+        <li><b>Auf Papier:</b> Wie in der Klausur: Uhr an, Stift, kein IntelliJ, keine Unterlagen. Danach mit der Musterlösung vergleichen und ehrlich abhaken.</li></ol>
+        <div class="row" style="margin-top:10px"><button class="btn primary" data-tnext="1">Nächste offene Übung</button>
+        <span class="small muted">Geschafft heißt: Tabelle und Puzzle zu 100 %, Papier ab 70 %.</span></div></div>` +
+      (kap.length ? kap.map(k => `<div class="kapitel-h">${esc(k.titel)} · ${tGeschafft([k])}/${k.training.length} geschafft</div>
+        <div class="card tliste" style="padding:6px 16px">${k.training.map((u, i) => {
+          const x = st[k.id + ":" + i];
+          return `<button class="tzeile" data-topen="${k.id}:${i}"><span><span class="badge ${u.typ}">${TYPNAME[u.typ]}</span> ${esc(u.titel)}${u.typ === "papier" ? ` <span class="small muted">· ${u.punkte} P., ${u.minuten} Min.</span>` : ""}</span>
+            <span class="tstatus ${tOk(u, x) ? "ok" : "muted"}">${x ? (tOk(u, x) ? "✓ " : "") + x.best + " %" : "offen"}</span></button>`;
+        }).join("")}</div>`).join("") : `<div class="card muted">In dieser Auswahl gibt es kein Training.</div>`);
+  }
+
+  function tTrace(u){
+    const s = tAuf, vorgabe = tVorgabe(u);
+    const zaehl = {}, lauf = {};
+    u.zeilen.forEach(z => zaehl[z.stelle] = (zaehl[z.stelle] || 0) + 1);
+    const rows = u.zeilen.map((z, r) => {
+      lauf[z.stelle] = (lauf[z.stelle] || 0) + 1;
+      const name = zaehl[z.stelle] > 1 ? `${z.stelle} (${lauf[z.stelle]}.)` : z.stelle;
+      return `<tr><td class="fest">${esc(name)}</td>${z.werte.map((w, c) => {
+        if (w === null) return `<td class="fest">–</td>`;
+        if (r < vorgabe) return `<td class="fest">${esc(w)}</td>`;
+        const key = r + ":" + c, ein = s.eingaben[key] || "";
+        const cls = s.geprueft ? (zellenGleich(ein, w) ? "r" : "f") : "";
+        return `<td class="${cls}"><input data-zelle="${key}" value="${esc(ein)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${esc(u.spalten[c])} bei ${esc(name)}" ${s.geprueft ? "disabled" : ""}>${cls === "f" ? `<span class="soll">richtig: ${esc(w)}</span>` : ""}</td>`;
+      }).join("")}</tr>`;
+    }).join("");
+    const tabelle = u.spalten.length ? `<div class="lbl">Werte direkt nach der markierten Zeile (// A, // B …)</div>
+      <div class="tabelle-wrap"><table class="trace"><tr><th>Stelle</th>${u.spalten.map(c => `<th>${esc(c)}</th>`).join("")}</tr>${rows}</table></div>
+      <p class="small muted">${vorgabe ? "Die erste Zeile ist als Beispiel ausgefüllt. " : ""}Ein Strich heißt: Die Variable gibt es dort noch nicht. Strings ohne Anführungszeichen eintragen, Arrays wie [1, 2, 3].</p>` : "";
+    const ausOk = s.geprueft && u.ausgabe && ausgabeZeilen(s.eingaben.aus || "") === ausgabeZeilen(u.ausgabe);
+    const ausgabe = u.ausgabe ? `<div class="lbl">Was steht am Ende auf der Konsole? (eine Zeile pro println)</div>
+      <textarea class="aus ${s.geprueft ? (ausOk ? "r" : "f") : ""}" data-aus="1" spellcheck="false" ${s.geprueft ? "disabled" : ""}>${esc(s.eingaben.aus || "")}</textarea>
+      ${s.geprueft && !ausOk ? `<div class="lbl">Richtige Ausgabe</div>${codeBlock(u.ausgabe, "out")}` : ""}` : "";
+    return `${codeBlock(u.code)}${tabelle}${ausgabe}
+      ${s.geprueft ? `<div class="feedback ${s.pct === 100 ? "ok" : "no"}"><b>${s.r} von ${s.n} richtig (${s.pct} %).</b> ${esc(u.erklaerung)}</div>
+        <div class="row" style="margin-top:14px"><button class="btn" data-tact="neu">Nochmal</button><button class="btn primary" data-tnext="1">Nächste offene Übung</button></div>`
+      : `<div style="margin-top:14px"><button class="btn primary" data-tact="pruefen">Prüfen</button></div>`}`;
+  }
+  function puzzleFehler(u, texte){
+    // Liefert -1, wenn alles stimmt, sonst die erste falsche Position. Zeilen in einem frei-Block dürfen getauscht werden.
+    const block = {};
+    u.frei.forEach(b => b.forEach(i => block[i] = b));
+    for (let i = 0; i < Math.max(texte.length, u.zeilen.length); i++) {
+      const b = block[i];
+      if (b && i === b[0]) {
+        const soll = b.map(j => u.zeilen[j]).sort().join("\n"), ist = b.map(j => texte[j]).sort().join("\n");
+        if (soll !== ist) return i;
+        i = b[b.length - 1];
+        continue;
+      }
+      if (texte[i] !== u.zeilen[i]) return i;
+    }
+    return -1;
+  }
+  function tParsons(u){
+    const s = tAuf, e = s.ergebnis;
+    const texte = s.antwort.map(i => s.pool[i].t);
+    const eing = einruecken(texte);
+    const rahmen = u.rahmen.trim() !== "// ... deine Zeilen ..." ? `<details style="margin:6px 0"><summary class="small muted" style="cursor:pointer">Was schon drumherum steht</summary>${codeBlock(u.rahmen)}</details>` : "";
+    const pool = s.pool.map((z, i) => s.antwort.includes(i) ? "" : `<button class="pzline" data-pzdazu="${i}">${esc(z.t)}</button>`).join("");
+    const antwort = s.antwort.length ? s.antwort.map((pi, j) => {
+      const cls = e && !e.ok ? (s.pool[pi].warum || j === e.pos ? "f" : "") : e && e.ok ? "r" : "";
+      return `<button class="pzline ${cls}" data-pzweg="${j}" title="Zurücklegen">${esc(eing[j])}</button>`;
+    }).join("") : `<p class="small muted">Klick unter „Zeilen“ die Zeilen in der richtigen Reihenfolge an. Ein Klick auf eine Zeile hier legt sie zurück.</p>`;
+    let fb = "";
+    if (e) {
+      if (e.ok) fb = `<div class="feedback ok"><b>Richtig.</b> So läuft das Programm:${codeBlock(u.ausgabe, "out")}</div>`;
+      else fb = `<div class="feedback no"><b>Noch nicht.</b> ${esc(e.text)}${e.warum.map(w => `<div style="margin-top:6px">${esc(w)}</div>`).join("")}</div>`;
+    }
+    return `${rahmen}<div class="pz">
+        <div><div class="lbl">Zeilen</div><div class="pzbox">${pool || `<p class="small muted">Alle Zeilen verbaut.</p>`}</div></div>
+        <div><div class="lbl">Dein Programm</div><div class="pzbox">${antwort}</div></div>
+      </div>${fb}
+      ${s.zeigeLoesung ? `<div class="lbl">Lösung</div>${codeBlock(einruecken(u.zeilen).join("\n"))}<div class="lbl">Ausgabe</div>${codeBlock(u.ausgabe, "out")}` : ""}
+      <div class="row" style="margin-top:14px">
+        ${e && e.ok ? `<button class="btn" data-tact="neu">Nochmal mischen</button><button class="btn primary" data-tnext="1">Nächste offene Übung</button>`
+        : `<button class="btn primary" data-tact="pruefen" ${s.antwort.length ? "" : "disabled"}>Prüfen</button><button class="btn" data-tact="leeren">Alles zurücklegen</button>
+           ${s.versuche && !s.zeigeLoesung ? `<button class="btn" data-tact="loesung">Lösung zeigen</button>` : ""}`}
+      </div>`;
+  }
+  function tPapier(u){
+    const s = tAuf;
+    const info = `<p class="small muted">${u.punkte} Punkte · etwa ${u.minuten} Minuten (in der Klausur gilt ungefähr 1 Punkt pro Minute).</p>
+      ${u.code ? `<div class="lbl">Gegeben</div>${codeBlock(u.code)}` : ""}`;
+    if (s.phase === "start") return `${info}<p>Nimm ein Blatt Papier und einen Stift. Kein IntelliJ, keine Unterlagen, wie in der Klausur. Erst wenn du fertig bist, schaust du die Lösung an.</p>
+      <button class="btn primary" data-tact="start">Uhr starten</button>`;
+    if (s.phase === "schreiben") return `${info}<div class="row"><span class="uhr" id="tuhr">0:00</span><span class="muted">von ${u.minuten}:00</span>
+      <button class="btn primary" data-tact="zeigen">Fertig, Lösung zeigen</button></div>`;
+    const fertig = s.phase === "fertig";
+    return `${info}<p class="small muted">Deine Zeit: ${uhrText(Math.round(s.dauer / 1000))} (Vorgabe ${u.minuten} Min.)</p>
+      <div class="lbl">Musterlösung</div>${codeBlock(u.loesung)}
+      ${u.test ? `<details style="margin:6px 0"><summary class="small muted" style="cursor:pointer">Damit wurde die Musterlösung getestet</summary>${codeBlock(u.test)}<div class="lbl">Ausgabe</div>${codeBlock(u.testAusgabe, "out")}</details>` : ""}
+      <div class="lbl" style="margin-top:12px">Hake ab, was auf deinem Blatt stimmt. Ein anderer Weg zählt, wenn er dasselbe tut.</div>
+      ${u.checkliste.map((t, i) => `<label class="punkt"><input type="checkbox" data-tpunkt="${i}" ${fertig && s.haken[i] ? "checked" : ""} ${fertig ? "disabled" : ""}><span>${esc(t)}</span></label>`).join("")}
+      ${fertig ? `<div class="feedback ${s.pct >= 70 ? "ok" : "no"}"><b>${s.pct} %.</b> ${s.pct >= 70 ? "Geschafft. In ein paar Tagen ohne Hilfe noch mal schreiben, dann sitzt es." : "Noch nicht geschafft. Lies die Lösung genau, schreib sie morgen noch mal aus dem Kopf und bewerte dich neu."}</div>
+        <div class="row" style="margin-top:14px"><button class="btn" data-tact="neu">Nochmal</button><button class="btn primary" data-tnext="1">Nächste offene Übung</button></div>`
+      : `<div style="margin-top:14px"><button class="btn primary" data-tact="bewerten">Bewerten</button></div>`}`;
+  }
+  function renderTraining(v){
+    clearInterval(tUhr);
+    if (tAuf && !tFinde(tAuf.id)) tAuf = null;
+    if (!tAuf) return renderTListe(v);
+    const { k, u, id } = tFinde(tAuf.id);
+    const alt = tStand()[id];
+    v.innerHTML = `<div class="card">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <button class="btn" data-tback="1">← Zur Liste</button>
+        <span class="small muted">${esc(k.titel.split(":")[0])} · <span class="badge ${u.typ}">${TYPNAME[u.typ]}</span>${alt ? ` · bisher bestes: ${alt.best} %` : ""}</span>
+      </div>
+      <h2 style="font-size:19px;margin:0 0 6px">${esc(u.titel)}</h2>
+      <p>${absatz(u.text)}</p>
+      ${({ trace: tTrace, parsons: tParsons, papier: tPapier })[u.typ](u)}
+    </div>`;
+    if (u.typ === "papier" && tAuf.phase === "schreiben") {
+      const tick = () => {
+        const el = $("#tuhr"); if (!el) return clearInterval(tUhr);
+        const t = Math.floor((Date.now() - tAuf.start) / 1000);
+        el.textContent = uhrText(t); el.style.color = t > u.minuten * 60 ? "var(--bad)" : "";
+      };
+      tick(); tUhr = setInterval(tick, 1000);
+    }
+  }
+  function tAktion(act){
+    const s = tAuf, u = tFinde(s.id).u;
+    if (act === "neu") tOeffne(s.id);
+    else if (act === "pruefen" && u.typ === "trace") {
+      document.querySelectorAll("[data-zelle]").forEach(i => s.eingaben[i.dataset.zelle] = i.value);
+      const aus = document.querySelector("[data-aus]"); if (aus) s.eingaben.aus = aus.value;
+      const vorgabe = tVorgabe(u); let n = 0, r = 0;
+      u.zeilen.forEach((z, ri) => z.werte.forEach((w, c) => {
+        if (w === null || ri < vorgabe) return;
+        n++; if (zellenGleich(s.eingaben[ri + ":" + c] || "", w)) r++;
+      }));
+      if (u.ausgabe) { n++; if (ausgabeZeilen(s.eingaben.aus || "") === ausgabeZeilen(u.ausgabe)) r++; }
+      Object.assign(s, { geprueft: true, r, n, pct: Math.round(r / n * 100) });
+      tSpeichere(s.id, s.pct);
+    }
+    else if (act === "pruefen" && u.typ === "parsons") {
+      const texte = s.antwort.map(i => s.pool[i].t);
+      const falsch = s.antwort.filter(i => s.pool[i].warum).map(i => s.pool[i]);
+      const pos = puzzleFehler(u, texte);
+      s.versuche = (s.versuche || 0) + 1;
+      if (falsch.length) s.ergebnis = { ok: false, pos: -1, text: falsch.length === 1 ? "Eine Zeile gehört nicht hinein (rot markiert):" : "Diese Zeilen gehören nicht hinein (rot markiert):", warum: falsch.map(z => `„${z.t}“: ${z.warum}`) };
+      else if (pos === -1) s.ergebnis = { ok: true };
+      else if (texte.length < u.zeilen.length && (pos >= texte.length || u.frei.some(b => b[0] === pos && b[b.length - 1] >= texte.length))) s.ergebnis = { ok: false, pos: -1, text: `Bis hierhin stimmt alles. Es fehlen noch ${u.zeilen.length - texte.length} Zeilen.`, warum: [] };
+      else s.ergebnis = { ok: false, pos, text: `Die Reihenfolge stimmt ab der markierten Zeile ${pos + 1} nicht. Alles darüber passt.`, warum: [] };
+      if (s.ergebnis.ok || texte.length >= u.zeilen.length || falsch.length) tSpeichere(s.id, s.ergebnis.ok ? 100 : 0);
+    }
+    else if (act === "loesung") s.zeigeLoesung = true;
+    else if (act === "leeren") { s.antwort = []; s.ergebnis = null; }
+    else if (act === "start") { s.phase = "schreiben"; s.start = Date.now(); }
+    else if (act === "zeigen") { s.phase = "loesung"; s.dauer = Date.now() - s.start; }
+    else if (act === "bewerten") {
+      s.haken = u.checkliste.map((t, i) => !!document.querySelector(`[data-tpunkt="${i}"]:checked`));
+      s.pct = Math.round(s.haken.filter(Boolean).length / u.checkliste.length * 100);
+      s.phase = "fertig";
+      tSpeichere(s.id, s.pct);
+    }
+    render();
+  }
+  function tGeheZu(id){
+    state.tab = "training"; store.set("tab", state.tab);
+    if (id) tOeffne(id); else tAuf = null;
+    render(); window.scrollTo(0, 0);
+  }
+
+  // ---------- Formeln ----------
+  function renderFormeln(v){
+    const kap = aktiveKapitel().filter(k => k.formeln.length);
+    if (!kap.length) { v.innerHTML = `<div class="card muted">In dieser Auswahl gibt es keine Formeln.</div>`; return; }
+    v.innerHTML = kap.map(k => `<div class="kapitel-h">${esc(k.titel)} · ${esc(k.abschnitt)}</div>` +
+      k.formeln.map((f, i) => `<div class="card formel">
+        <h3>${esc(f.name)}</h3>
+        ${f.code ? codeBlock(f.code) : `<div class="tex" data-tex="${k.id}:${i}"></div>`}
+        <div class="small">${esc(f.text)}</div>
+        ${f.bsp ? `<div class="bsp muted">Beispiel: ${esc(f.bsp)}</div>` : ""}
+        <div class="src" style="margin-top:6px">${esc(quelle(f))}</div>
+      </div>`).join("")).join("");
+    v.querySelectorAll("[data-tex]").forEach(el => {
+      const [kid, i] = el.dataset.tex.split(":");
+      tex(el, fach().kapitel.find(k => k.id === kid).formeln[+i].tex);
+    });
+  }
+
+  // ---------- Mündlich (Prüfungssimulation) ----------
+  // Frage lesen, laut antworten (Uhr läuft), dann Musterpunkte abhaken. Ergebnis = abgehakte Punkte in %.
+  let mSitzung = null, mUhr = null;
+  const mKey = () => "muendlich:" + state.fach;
+  function neueMSitzung(nurSchwach){
+    const stand = store.get(mKey(), {});
+    let fragen = aktiveKapitel().flatMap(k => k.pruefungsfragen.map((p, i) => ({ ...p, id: k.id + ":" + i, kapitel: k })));
+    if (nurSchwach) fragen = fragen.filter(p => !stand[p.id] || stand[p.id].letzt < 70);
+    mSitzung = { fragen: shuffle(fragen), pos: 0, phase: "frage", start: 0, ergebnisse: [] };
+  }
+  function renderMuendlich(v){
+    clearInterval(mUhr);
+    if (!mSitzung) neueMSitzung(false);
+    const s = mSitzung, stand = store.get(mKey(), {});
+    if (s.pos >= s.fragen.length) {
+      const e = s.ergebnisse, avg = e.length ? Math.round(e.reduce((a, b) => a + b, 0) / e.length) : 0;
+      const schwach = aktiveKapitel().flatMap(k => k.pruefungsfragen.map((p, i) => ({ p, st: stand[k.id + ":" + i] }))).filter(x => !x.st || x.st.letzt < 70).length;
+      v.innerHTML = `<div class="card" style="text-align:center"><div class="flash">
+        <div class="q">${s.fragen.length ? `Runde fertig: Ø ${avg} % der Kernpunkte genannt.` : "Keine Prüfungsfragen in dieser Auswahl."}</div>
+        <div class="muted small">Unter 70 % oder noch nie geübt: ${schwach} Fragen</div>
+        <div class="row" style="justify-content:center">
+          <button class="btn primary" data-act="m-neu">Neue Runde</button>
+          <button class="btn" data-act="m-schwach" ${schwach ? "" : "disabled"}>Nur schwache Fragen (${schwach})</button>
+        </div></div></div>`;
+      return;
+    }
+    const p = s.fragen[s.pos], alt = stand[p.id];
+    const kopf = `<div class="progress"><i style="width:${s.pos / s.fragen.length * 100}%"></i></div>
+      <div class="meta"><span>${esc(p.kapitel.titel)}${alt ? ` · zuletzt ${alt.letzt} %` : ""}</span><span>${s.pos + 1} / ${s.fragen.length}</span></div>
+      <div class="q" style="font-size:19px;font-weight:600;margin-bottom:12px">${esc(p.frage)}</div>`;
+    if (s.phase === "frage") {
+      v.innerHTML = `<div class="card">${kopf}
+        <p class="muted small">Antworte laut, als säßest du in der Prüfung: erst die Kernaussage, dann Begründung und ein Beispiel. Etwa 1 bis 2 Minuten.</p>
+        <div class="row"><span class="uhr" id="uhr">0:00</span>
+          <button class="btn primary" data-act="m-zeigen">Fertig, Musterpunkte zeigen</button></div></div>`;
+      if (!s.start) s.start = Date.now();
+      const tick = () => { const el = $("#uhr"); if (!el) return clearInterval(mUhr); const t = Math.floor((Date.now() - s.start) / 1000); el.textContent = Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0"); };
+      tick(); mUhr = setInterval(tick, 1000);
+      return;
+    }
+    v.innerHTML = `<div class="card">${kopf}
+      <div class="lbl">Hake ab, was du gesagt hast</div>
+      ${p.punkte.map((t, i) => `<label class="punkt"><input type="checkbox" data-punkt="${i}"><span>${esc(t)}</span></label>`).join("")}
+      ${p.antwort ? `<details style="margin-top:12px"><summary class="btn">Musterantwort lesen</summary><p>${esc(p.antwort)}</p></details>` : ""}
+      ${p.q ? `<div class="src" style="margin-top:8px">${esc(p.q)}</div>` : ""}
+      <div style="margin-top:14px"><button class="btn primary" data-act="m-weiter">Bewerten und weiter</button></div></div>`;
+  }
+  function mAktion(act){
+    const s = mSitzung;
+    if (act === "m-neu") neueMSitzung(false);
+    else if (act === "m-schwach") neueMSitzung(true);
+    else if (act === "m-zeigen") s.phase = "punkte";
+    else if (act === "m-weiter") {
+      const p = s.fragen[s.pos];
+      const hak = document.querySelectorAll("[data-punkt]:checked").length;
+      const pct = Math.round(hak / p.punkte.length * 100);
+      const stand = store.get(mKey(), {});
+      stand[p.id] = { letzt: pct, best: Math.max(pct, (stand[p.id] || {}).best || 0), am: Date.now() };
+      store.set(mKey(), stand);
+      s.ergebnisse.push(pct); s.pos++; s.phase = "frage"; s.start = 0;
+    }
+    render();
+  }
+
+  // ---------- Steuerung ----------
+  function render(){
+    if (!fach()) { $("#view").innerHTML = `<div class="card">Keine Fachdaten gefunden. Liegt die Datei in <code>daten/</code>?</div>`; return; }
+    renderKopf();
+    const v = $("#view");
+    if (state.tab !== "muendlich") clearInterval(mUhr);
+    if (state.tab !== "training") clearInterval(tUhr);
+    ({ uebersicht: renderUebersicht, lernblatt: renderLernblatt, training: renderTraining, karten: renderKarten, quiz: renderQuiz, formeln: renderFormeln, muendlich: renderMuendlich })[state.tab](v);
+  }
+  const reset = () => { kartenSitzung = null; quizSitzung = null; mSitzung = null; tAuf = null; };
+
+  $("#tabs").addEventListener("click", e => {
+    const b = e.target.closest("button[data-tab]"); if (!b) return;
+    state.tab = b.dataset.tab; store.set("tab", state.tab); render();
+  });
+  $("#fach").addEventListener("change", e => { state.fach = e.target.value; store.set("fach", state.fach); state.filter = null; reset(); render(); });
+  $("#chips").addEventListener("click", e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    const k = b.dataset.k;
+    if (k === "alle") state.filter = null;
+    else {
+      const f = state.filter ? new Set(state.filter) : new Set();
+      f.has(k) ? f.delete(k) : f.add(k);
+      state.filter = f.size ? f : null;
+    }
+    reset(); render();
+  });
+  $("#view").addEventListener("click", e => {
+    const go = e.target.closest("[data-go]");
+    if (go) { state.tab = go.dataset.go; store.set("tab", state.tab); render(); return; }
+    const opt = e.target.closest("[data-opt]");
+    if (opt) { quizAntwort(+opt.dataset.opt); return; }
+    const lek = e.target.closest("[data-lek]");
+    if (lek) {
+      const an = lektionUmschalten(lek.dataset.lek); // ohne Neuaufbau, damit die Scrollposition bleibt
+      lek.classList.toggle("ist", an); lek.setAttribute("aria-pressed", an); lek.textContent = an ? "✓ Erledigt" : "Als erledigt markieren";
+      return;
+    }
+    const tb = e.target.closest("[data-tback]"); if (tb) { tAuf = null; render(); return; }
+    const to = e.target.closest("[data-topen]"); if (to) { tGeheZu(to.dataset.topen); return; }
+    const tn = e.target.closest("[data-tnext]"); if (tn) { tGeheZu(tNaechste()); return; }
+    const pd = e.target.closest("[data-pzdazu]"); if (pd) { tAuf.antwort.push(+pd.dataset.pzdazu); tAuf.ergebnis = null; render(); return; }
+    const pw = e.target.closest("[data-pzweg]"); if (pw) { tAuf.antwort.splice(+pw.dataset.pzweg, 1); tAuf.ergebnis = null; render(); return; }
+    const ta = e.target.closest("[data-tact]"); if (ta) { tAktion(ta.dataset.tact); return; }
+    const a = e.target.closest("[data-act]"); if (!a) return;
+    const act = a.dataset.act;
+    if (act.startsWith("m-")) mAktion(act);
+    else if (state.tab === "karten") kartenAktion(act);
+    else if (act === "weiter") quizWeiter();
+    else if (act === "neu") { neuesQuiz(false); render(); }
+    else if (act === "fehler") { neuesQuiz(true); render(); }
+  });
+  $("#view").addEventListener("submit", e => {
+    if (e.target.id === "zahlform") { e.preventDefault(); quizAntwort($("#zahl").value); }
+  });
+  document.addEventListener("keydown", e => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA") return;
+    if (state.tab === "karten" && kartenSitzung && kartenSitzung.pos < kartenSitzung.liste.length) {
+      if (e.code === "Space") { e.preventDefault(); if (!kartenSitzung.offen) kartenAktion("zeigen"); }
+      else if (kartenSitzung.offen && e.key === "1") kartenAktion("nein");
+      else if (kartenSitzung.offen && e.key === "2") kartenAktion("ja");
+    }
+    if (state.tab === "quiz" && quizSitzung && quizSitzung.antwort !== null && e.key === "Enter") { e.preventDefault(); quizWeiter(); }
+  });
+
+  // KaTeX lädt per defer; danach noch einmal rendern, damit Formeln erscheinen
+  window.addEventListener("load", render);
+  render();
+  sync.start(); // nur online auf claude.ai wirksam, lokal passiert nichts
+})();
+</script>
+</body>
+</html>
